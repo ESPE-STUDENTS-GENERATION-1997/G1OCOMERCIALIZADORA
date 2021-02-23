@@ -14,7 +14,6 @@ public class ExceptionHandlerController {
 	@ExceptionHandler(AuthenticationCustomException.class)
 	public String authenticationCustomExceptionHandler(AuthenticationCustomException ex, Model model) {
 		model.addAttribute("errorMessage", ex.getMessage());
-		System.out.println("entro bien");
 		return ex.getViewResolver();
 	}
 	
