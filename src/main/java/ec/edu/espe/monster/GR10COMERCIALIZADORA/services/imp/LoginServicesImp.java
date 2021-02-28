@@ -103,7 +103,6 @@ public class LoginServicesImp implements ILoginServices {
 		
 		this.validationStateOfUser(user.getCurrentState());
 		
-
 		return "/store/home";
 	}
 	
@@ -132,7 +131,7 @@ public class LoginServicesImp implements ILoginServices {
 								"/onboarding/login", AuthenticationExceptionCodes.STATE_USER_EXPIRED_CREDENTIAL);
 					} else {
 						throw new AuthenticationCustomException("Cambie sus credenciales temporales",
-								"/auth/change-credentials", AuthenticationExceptionCodes.STATE_USER_UPDATE_TEMP_CREDENTIAL);
+								"/onboarding/change-credentials", AuthenticationExceptionCodes.STATE_USER_UPDATE_TEMP_CREDENTIAL);
 					}
 				} else {
 					throw new AuthenticationCustomException("Las credenciales temporales expiraron.",

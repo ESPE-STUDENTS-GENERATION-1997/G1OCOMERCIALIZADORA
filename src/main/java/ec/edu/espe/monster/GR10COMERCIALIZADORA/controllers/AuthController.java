@@ -12,6 +12,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.LoginGetRequest;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.LoginPostRequest;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.UpdateCredentialDTO;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ICredentialServices;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ILoginServices;
 
 @Controller
@@ -19,6 +21,9 @@ public class AuthController {
 	
 	@Autowired
 	private ILoginServices loginServices;
+	
+	@Autowired
+	private ICredentialServices credentialServices;
 	
 	@GetMapping("/login")
 	public String login(@RequestParam(value = "error", required = false) String error, Model model, Principal principal, RedirectAttributes flash) {
@@ -41,7 +46,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/auth/change-credentials")
-	public String updateCredential(Model model, Principal principal) {
-		return "redirect:/";
+	public String updateCredential(UpdateCredentialDTO request, Model model, Principal principal) {
+		return credentialServices.updateCredentials(request);
 	}
 }
