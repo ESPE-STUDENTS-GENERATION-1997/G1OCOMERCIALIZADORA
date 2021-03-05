@@ -49,5 +49,5 @@ public class ProfileUser implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_cod_sistema_perfil",nullable = false)
 	@JsonIgnore
-	private System systemProfile;
+	private SystemApp systemProfile;
 }

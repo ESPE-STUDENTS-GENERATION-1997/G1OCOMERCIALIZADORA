@@ -43,5 +43,5 @@ public class ResourceSystem {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "sistema",nullable = false)
 	@JsonIgnore
-	private System system;
+	private SystemApp system;
 }

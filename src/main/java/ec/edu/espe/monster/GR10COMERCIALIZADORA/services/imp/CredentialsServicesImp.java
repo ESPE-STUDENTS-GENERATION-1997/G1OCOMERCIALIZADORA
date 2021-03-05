@@ -10,6 +10,7 @@ import ec.edu.espe.monster.GR10COMERCIALIZADORA.exception.AuthenticationCustomEx
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.UpdateCredentialDTO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ICredentialServices;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IRedirectLogin;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -22,6 +23,9 @@ public class CredentialsServicesImp implements ICredentialServices {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private IRedirectLogin redirectLogin;
 
 	@Override
 	public String updateCredentials(UpdateCredentialDTO request) {
@@ -47,7 +51,7 @@ public class CredentialsServicesImp implements ICredentialServices {
 			log.error("[INTERNAL ERROR]");
 			throw e;
 		}
-		return "redirect:/";
+		return redirectLogin.redirectByUserType(user.getType());
 	}
 
 	@Override

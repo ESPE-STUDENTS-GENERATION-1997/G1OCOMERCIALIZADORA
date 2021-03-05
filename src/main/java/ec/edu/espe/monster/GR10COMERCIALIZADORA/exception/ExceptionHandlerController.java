@@ -17,4 +17,11 @@ public class ExceptionHandlerController {
 		return ex.getViewResolver();
 	}
 	
+	@ExceptionHandler(BusinessLogicException.class)
+	public String  bussinessLogicExceptionHandler(BusinessLogicException ex, Model model) {
+		model.addAttribute("errorMessage", ex.getMessage());
+		model.addAttribute("recommendation", ex.getRecommendation());
+		return "/error/500";
+	}
+	
 }

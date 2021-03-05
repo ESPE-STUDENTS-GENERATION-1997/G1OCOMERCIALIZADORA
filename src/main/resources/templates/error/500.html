@@ -13,6 +13,8 @@
 					<h5 class="card-title">
 						Contáctese con el administrador de Sistema. 
 					</h5>
+					<p class="card-text" th:if="${errorMessage != null}" th:text="${errorMessage}"></p>
+					<p class="card-text" th:if="${recommendation != null}" th:text="${recommendation}"></p>
 					<hr/>
 					<a th:href="@{/store}" class="card-link">Volver al Inicio</a>
 				</div>

@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.constances.UserType;
 import lombok.Data;
 
 @Entity
@@ -66,6 +67,9 @@ public class UserApp implements Serializable{
 	
 	@Column( name = "fec_modificacion_usuario")
 	private LocalDateTime dateModified;
+	
+	@Column(name = "tipo_usuario")
+	private UserType type;
 	
 	@OneToOne(mappedBy = "user")
 	@JsonIgnore
