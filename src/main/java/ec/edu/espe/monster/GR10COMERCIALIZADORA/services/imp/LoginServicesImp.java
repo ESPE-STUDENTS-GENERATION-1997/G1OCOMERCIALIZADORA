@@ -28,6 +28,7 @@ import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.StateUser;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.States;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ILoginServices;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IRedirectLogin;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -40,6 +41,9 @@ public class LoginServicesImp implements ILoginServices {
 	
 	@Autowired
 	private IUserAppDAO userDAO;
+	
+	@Autowired
+	private IRedirectLogin redirectLogin;
 
 	@Override
 	public String loginUser(LoginGetRequest request) {
@@ -103,7 +107,7 @@ public class LoginServicesImp implements ILoginServices {
 		
 		this.validationStateOfUser(user.getCurrentState());
 		
-		return "/store/home";
+		return redirectLogin.redirectByUserType(user.getType());
 	}
 	
 	private void validationStateOfUser(StateUser stateUser) {

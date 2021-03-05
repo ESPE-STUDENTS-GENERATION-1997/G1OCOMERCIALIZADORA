@@ -9,9 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IStateUserDAO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IUserAppDAO;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.StateUser;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IUserService;
 

@@ -18,26 +18,24 @@ INSERT INTO xeest_estado (vigente_estado,descripcion_estado,keyword_estado,acces
 	 ('es la ciudad más grande de Ecuador','Guayaquil',2);
 	 
 	 
- INSERT INTO xedid_dirdom (ciudad_domicilio,num_domicilio,calle_prin_domicilio,barrio_domicilio,provincia_domicilio,calle_sec_domicilio) VALUES
- ('QUITO','QU01','ALEJANDRO CARDENAS','EDEN DEL VALLE','PICHINCHA','E23'),
- ('GUAYAQUIL','GU03','RICHARD BURGOS','CONOCOTO','GUAYAS','E35'),
- ('lAGO AGRIO','LA02','HECTOR CHICA','14 DE DICIEMBRE','SUCUMBIOS','E45'),
- ('QUITO','QU01','LA JULIANA','SAN JUANITO','PICHINCHA','E234'),
- ('GUAYAQUIL','GU03','AMAZONAS','COLLACOTO','GUAYAS','E753');
  
  
  INSERT INTO xesis_sistem (vigencia_sistema,descripcion_sistema,keyword_sistema,nombre_sistema,id_sistema_original) VALUES
-	 (1,'ADMIN','A001','ADMIN',1),
-	 (1,'REPORTES','A002','REPORTES',1),
-	 (1,'COMPROBANTES','A003','COMPROBANTES',1),
-	 (1,'MERCADEO','A004','MERCADEO',1),
-	 (1,'STORE','A005','STORE',1);
+	 (1,'Administrar usuarios y  productos, acceso a todo el sistema.','A001','Administracion',null),
+	 (1,'Generar Reportes del Sistema','A002','Reportes',null),
+	 (1,'Generar Comprobantes','A003','Comprobantes Eléctronicos.',null),
+	 (1,'Programar tareas de marketing.','A004','Mercadeo',null),
+	 (1,'Tienta Virtual, enfocada a los clientes externos.','A005','Tienda Virtual',null);
+
+INSERT INTO xedid_dirdom (ciudad_domicilio,num_domicilio,calle_prin_domicilio,barrio_domicilio,provincia_domicilio,calle_sec_domicilio) VALUES
+	 ('QUITO','E00-001','El Inca','San Isidro','Pichincha','6 de Diciembre'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca');
 	 
 
-INSERT INTO xeusa_usuario (fec_creacion_usuario,fec_modificacion_usuario,fec_nacimiento_usuario,discapacidad_usuario,correo_usuario,apellidos_usuario,nombres_usuario,username_usuario,num_documento_usuario,password_usuario,telefono_usuario,fk_cod_domicilio) VALUES
-	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'dflasso1@espe.edu.ec','Lasso Ayala','Dany Fernando','dflasso','1726039967','{bcrypt}$2a$10$gZYfdWr29/8f9CI2.7QBwuKCVsVsgLGG0kyBqs/1hkHtpq39OTRTK','0999258192',1),
-	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'socrisanto@espe.edu.ec','Crisanto','Stalin','socrisanto','1723401715','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0995077348',2);
-	 
+INSERT INTO xeusa_usuario (fec_creacion_usuario,fec_modificacion_usuario,fec_nacimiento_usuario,discapacidad_usuario,correo_usuario,apellidos_usuario,nombres_usuario,username_usuario,num_documento_usuario,password_usuario,telefono_usuario,tipo_usuario,fk_cod_domicilio) VALUES
+	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'dflasso1@espe.edu.ec','Lasso Ayala','Dany Fernando','dflasso','1726039967','{bcrypt}$2a$10$gZYfdWr29/8f9CI2.7QBwuKCVsVsgLGG0kyBqs/1hkHtpq39OTRTK','0999258192','ut001',1),
+	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'socrisanto@espe.edu.ec','Crisanto','Stalin','socrisanto','1723401715','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0995077348','ut001',2);
+
 	 
 	INSERT INTO xeest_estusu (fec_asignacion_estusu,fec_expiracion_estusu,observation_estusu,fk_cod_estado,fk_cod_user) VALUES
 	 ('2021-02-23 14:25:10',NULL,NULL,1,1),

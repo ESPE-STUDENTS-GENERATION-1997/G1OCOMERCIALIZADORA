@@ -1,31 +1,24 @@
 package ec.edu.espe.monster.GR10COMERCIALIZADORA.controllers;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.AddressHome;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.StateUser;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.States;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IAddressHomeService;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ILoginServices;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IStateUserService;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IUserService;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.imp.SendMailServiceImpl;
-import jdk.internal.org.jline.utils.Log;
 
 
 
@@ -47,7 +40,7 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@GetMapping("/users/users-view")
+	@GetMapping("/users/index")
 	public String usersController(Model model){
 		List<UserApp> listadoUsuarios = userService.listUsers();
 		List<AddressHome> listadoDirecciones = addressService.listAddressHome();
