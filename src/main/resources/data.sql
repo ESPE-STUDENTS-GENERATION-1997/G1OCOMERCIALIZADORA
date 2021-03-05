@@ -42,5 +42,14 @@ INSERT INTO xeusa_usuario (fec_creacion_usuario,fec_modificacion_usuario,fec_nac
 	INSERT INTO xeest_estusu (fec_asignacion_estusu,fec_expiracion_estusu,observation_estusu,fk_cod_estado,fk_cod_user) VALUES
 	 ('2021-02-23 14:25:10',NULL,NULL,1,1),
 	 ('2021-02-23 14:25:10',NULL,NULL,2,2);
-	 
-	  
+
+INSERT INTO fepro_produc 
+(name_product,description_product,price_product,stock_product,created_product,img_product) 
+VALUES 
+('producto 1','Descripción del producto 1',2.50,5,NOW(),''),
+('producto 2','Descripción del producto 2',3.50,3,NOW(),'');
+
+INSERT INTO fecli_client (names_customer,lastnames_customer,document_customer,email_customer,phone_customer,address_customer) VALUES
+('Stalin','Crisanto','1723401715','stalincrisanto@hotmail.com','0995077348','sangolquí'),
+('Oswald','Crisanto','1708051311','luiscrisanto2010@hotmail.com','0998868008','rumiloma'),
+('Mónica','Caiza','1708102718','monica@hotmail.com','0996901618','fajardo');

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/public-layout.html :: 'head' ">
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+</head>
+<body id="page-top">
+	<!-- Navigation-->
+	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+		<div class="container" sec:authorize="isAuthenticated()">
+			<a class="navbar-brand js-scroll-trigger" href="#page-top">Los
+				Chinitos</a>
+			<button class="navbar-toggler navbar-toggler-right" type="button"
+				data-toggle="collapse" data-target="#navbarResponsive"
+				aria-controls="navbarResponsive" aria-expanded="false"
+				aria-label="Toggle navigation">
+				Menu <i class="fas fa-bars ml-1"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav text-uppercase ml-auto">
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						th:href="@{/store/home}">Menú Principal</a></li>
+					<!-- ENLACE A USUARIOS -->
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						th:href="@{/store/factura}">Facturación</a></li>
+
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="#team"> <span class="btn btn-light btn-sm"
+							sec:authentication="name"></span></a></li>
+
+					<li class="nav-item">
+						<form th:action="@{/logout}" class="nav-link js-scroll-trigger"
+							method="post">
+							<button class="btn btn-danger btn-sm" type="submit">CERRAR
+								SESIÓN</button>
+						</form>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container">
+		<h4>Buscar cliente</h4>
+		<div class="form-group row">
+			<label for="buscar_cliente" class="col-sm-4 col-form-label"
+				th:text="'Buscar cliente'"></label>
+			<div class="col-sm-6">
+				<input type="text" name="buscar_cliente" id="buscar_cliente"
+					class="form-control" />
+			</div>
+		</div>
+	</div>
+
+	<form th:action="@{/form}" th:object="${factura}" method="post">
+		<div class="container py-4" th:fragment="datosCliente">
+			<div class="card bg-light">
+				<div class="card-header">
+					<h5>Emisión de Factura</h5>
+				</div>
+				<div class="card-body" id="datosClienteFactura">
+					<h4 class="card-title"></h4>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="names_costumer">Cliente</label> <input type="text"
+								class="form-control" name="names_costumer" id="names_costumer"
+								placeholder="Cliente" disabled="true" />
+						</div>
+						<div class="form-group col-md-6">
+							<label for="document_costumer">Cédula de identidad</label> <input
+								type="text" class="form-control" name="document_costumer"
+								id="document_costumer" placeholder="Cédula de identidad"
+								disabled="true">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="email_costumer">Correo Electrónico</label> <input
+								type="email" class="form-control" name="email_costumer"
+								id="email_costumer" placeholder="Correo Electrónico"
+								disabled="true">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="phone_costumer">Teléfono</label> <input type="text"
+								class="form-control" name="phone_costumer" id="phone_costumer"
+								placeholder="Teléfono" disabled="true">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="address_costumer">Dirección</label> <input
+								type="text" class="form-control" name="address_costumer"
+								id="address_costumer" placeholder="Dirección domiciliaria"
+								disabled="true">
+						</div>
+					</div>
+				</div>
+				<div class="card-header">
+					<h5>Items de factura</h5>
+				</div>
+				<div class="card-body">
+					<div class="form-group row">
+						<label for="buscar_producto" class="col-sm-4 col-form-label"
+							th:text="'Buscar Producto'"></label>
+						<div class="col-sm-6">
+							<input type="text" name="buscar_producto" id="buscar_producto"
+								class="form-control" />
+						</div>
+						<table th:replace="store/plantilla-items :: itemsFactura"></table><br><br><br>
+						
+						<table id="cargarItemProductos" class="table table-sm table-striped table-hover">
+							<thead>
+								<tr>
+									<th>Nombre</th>
+									<th>Precio</th>
+									<th>Cantidad</th>
+									<th>Total</th>
+									<th>Eliminar item</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+						<div class="container" style="margin-left:660px">
+						<h5>Total&nbsp;<i class="fas fa-equals"></i>&nbsp;&nbsp;<i class="fas fa-dollar-sign"></i>&nbsp; <span class="badge badge-secondary" id="gran_total">0</span></h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+</body>
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery-ui.min.js}"></script>
+<script th:replace="store/js/autocomplete-product :: javascript"></script>
+<script th:replace="store/js/autocomplete-cliente :: javascript"></script>
+<footer th:replace="layouts/public-layout.html :: 'footer' "> </footer>
+</html>

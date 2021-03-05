@@ -54,3 +54,9 @@
     // Collapse the navbar when page is scrolled
     $(window).scroll(navbarCollapse);
 })(jQuery); // End of use strict
+
+
+function AbrirModalRegistroProducto()
+{
+	$("#modal_registro_producto").modal('show');
+}
