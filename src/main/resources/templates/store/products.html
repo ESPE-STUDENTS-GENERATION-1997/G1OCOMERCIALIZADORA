@@ -59,7 +59,7 @@
 			</div>
 		</div>
 
-		<table class="table">
+		<table class="table" id="tableProducts">
 			<thead class="thead-dark">
 				<tr>
 					<th>Código</th>
@@ -82,12 +82,16 @@
 					<td th:text="${product.created_product}"></td>
 					<td style="width:100px"><img class="img-responsive float-right" style="width: 120%;" th:src="@{'/uploads/'+${product.img_product}}" th:alt="${product.img_product}"> </td>
 					<td>
-						<button type="button" class="btn btn-primary">
+						<button type="button" class="editar btn btn-primary">
 							<i class="far fa-edit"></i>
 						</button>
-						<button type="button" class="btn btn-danger">
+						<a class="btn btn-danger" th:href="@{/delete/}+${product.code_product}" onclick="return confirm('Está seguro de eliminar la información del producto')">
 							<i class="fas fa-trash"></i>
-						</button>
+						</a>
+						<!-- <button type="button" class="btn btn-danger">
+							<i class="fas fa-trash"></i>
+						</button>-->
+						<input type="hidden" id="code_product_edit" th:value="${product.code_product}"  />
 					</td>
 				</tr>
 			</tbody>
@@ -95,6 +99,7 @@
 
 	</div>
 
+	<!-- AÑADIR PRODUCTO -->
 	<form method="post" th:object="${product}" th:action="@{/addProduct}" enctype="multipart/form-data">
 		<div class="modal fade" id="modal_registro_producto" role="dialog">
 			<div class="modal-dialog">
@@ -149,6 +154,64 @@
 			</div>
 		</div>
 	</form>
+	
+	<!-- EDITAR PRODUCTO -->
+	<form method="post" th:object="${product}" th:action="@{/editProduct}" enctype="multipart/form-data">
+		<div class="modal fade" id="modal_modificar_producto" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title">
+							<b>Editar Producto</b>
+						</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<input type="hidden" id="code_product" name="code_product"/>
+					<div class="modal-body">
+						<div class="col-lg-12">
+							<label for="">Nombre del Producto</label> <input type="text"
+								class="form-control" th:field="*{name_product}"
+								placeholder="Ingrese el nombre del producto" id="name_product" name="name_product"/> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Descripción del Producto</label> <input type="text"
+								class="form-control" th:field="*{description_product}"
+								placeholder="Ingrese la descripción del producto" id="description_product" name="description_product" /> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Precio del Producto</label> <input type="text"
+								class="form-control" th:field="*{price_product}"
+								placeholder="Ingrese el precio del producto" id="price_product" name="price_product"/> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Stock del Producto</label> <input type="number"
+								class="form-control" th:field="*{stock_product}"
+								placeholder="Ingrese el stock del producto" id="stock_product" name="stock_product"/> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Fecha de ingreso del Producto</label> <input type="date"
+								class="form-control" th:field="*{created_product}"
+								placeholder="Selecciones una fecha" id="created_product" name="created_product"/> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Imagen del producto</label> 
+							<input type="hidden" class="form-control" id="img_product" name="img_product"/>
+						</div>
+						<div style="width:110px; margin-left:20px">
+							<img id="img_product_mostrar" alt="" src="" style="width: 130%;">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<i class="fa fa-check"></i>&nbsp; <input type="submit"
+							class="btn btn-primary" value="Modificar Producto" />
+						<button type="button" class="btn btn-danger" onclick="cerrarModal();" data-dismiss="modal">
+							<i class="fa fa-close"></i>&nbsp;Cerrar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -158,7 +221,8 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
-	<script src="/js/scripts.js"></script>
+	<script th:replace="store/js/product :: product-script"></script>
+
 
 </body>
 <footer th:replace="layouts/public-layout.html :: 'footer' "> </footer>
