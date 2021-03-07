@@ -1,24 +1,27 @@
 package ec.edu.espe.monster.GR10COMERCIALIZADORA.controllers;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.AddressHome;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.StateUser;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.editors.SystemAppEditorByKeyword;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.editors.UserTypeEditor;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.UserRegisterDTO;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.constances.UserType;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.SystemApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IAddressHomeService;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IStateUserService;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ICitysServices;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IHandleInternalViews;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ISystemAppServices;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IUserService;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.imp.SendMailServiceImpl;
 
 
 
@@ -31,49 +34,53 @@ public class UserController {
 	@Autowired
 	private IAddressHomeService addressService;
 	
+
 	@Autowired
-	private IStateUserService stateUser;
+	private IHandleInternalViews handlerInternalViews;
 	
 	@Autowired
-	private SendMailServiceImpl sendMailService;
+	private ISystemAppServices systemAppServices;
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private ICitysServices cityServices;
+	
+	@Autowired
+	private UserTypeEditor userTypeEditor;
+	
+	@Autowired
+	private SystemAppEditorByKeyword systemEditor;
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(UserType.class, "type", userTypeEditor);
+		binder.registerCustomEditor(SystemApp.class, "permissons", systemEditor);
+	}
 	
 	@GetMapping("/users/index")
-	public String usersController(Model model){
-		List<UserApp> listadoUsuarios = userService.listUsers();
-		List<AddressHome> listadoDirecciones = addressService.listAddressHome();
-		UserApp user = new UserApp();
+	public String usersController(Model model, Principal principal){
 		model.addAttribute("titulo","Lista de Usuarios");
-		model.addAttribute("usuarios",listadoUsuarios);
-		model.addAttribute("direcciones", listadoDirecciones);
-		model.addAttribute("usuario",user);
+		model.addAttribute("usuarios",userService.listUsers());
+		model.addAttribute("direcciones", addressService.listAddressHome());
+		model.addAttribute("usuario",new UserRegisterDTO());
+		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
+		model.addAttribute("systemsApp",systemAppServices.getAllSystems());
+		model.addAttribute("types",UserType.values());
+		model.addAttribute("citys",cityServices.getAllCitys());
 		return "/users/users-view";
 	}
 	
 	@PostMapping("/newUser")
-	public String newUser(@ModelAttribute UserApp user, StateUser state)
+	public String newUser(UserRegisterDTO userRegisterRequest)
 	{
-		String password = userService.generatePassword();
-		user.setDateCreated(LocalDateTime.now());
-		user.setDateOfBirth(LocalDateTime.now());
-		//PASSWORD
-		String encryptPass = passwordEncoder.encode(password);
-		user.setPassword(encryptPass);
-		userService.newUser(user);
+		userService.saveUserWithPermisson(userRegisterRequest);
 		
-		state.setAssignmentDate(LocalDateTime.now());
-		state.setExpirationDatta(null);
-		state.setObservation(null);
-		state.setUser(user);
-		stateUser.insertStateUserServ(state, user);
-		
-		String message = "\n\nSu password para ingresar por primera vez es: " +password; 
-		
-		sendMailService.sendMail("comercializadorachinitos@gmail.com",user.getEmail(),"Acceso por primera vez", message);
-		
-		return "redirect:/users/users-view";
+		return "redirect:/users/index";
 	}
+	
+	@ModelAttribute(name = "titlePage")
+	public String addTittlePage() {
+		return "Administración de Usuarios";
+	}
+	
 	
 }

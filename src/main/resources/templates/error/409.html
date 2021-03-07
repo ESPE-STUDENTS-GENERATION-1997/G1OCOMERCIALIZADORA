@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layouts/public-layout.html :: 'head' ">
+</head>
+<body>
+	<header th:replace="layouts/public-layout.html :: 'header' ">
+	</header>
+	<main class="container py-4">
+		<section class="row">
+			<div class="col card alert alert-danger">
+				<div class="card-header">Conflictos Internos</div>
+				<div class="card-body">
+					<p class="card-text" th:if="${entity != null}" th:text="${entity}">
+					</p>
+					<p class="card-text" th:if="${message != null}" th:text="${message}">
+					</p>
+					<p class="card-text" th:if="${descriptionAccionFail != null}" th:text="${descriptionAccionFail}">
+					</p>
+					<a th:href="@{/store}" class="card-link">Volver al Inicio</a>
+				</div>
+			</div>
+		</section>
+	</main>
+	<footer th:replace="layouts/public-layout.html :: 'footer' ">
+	</footer>
+</body>
+</html>

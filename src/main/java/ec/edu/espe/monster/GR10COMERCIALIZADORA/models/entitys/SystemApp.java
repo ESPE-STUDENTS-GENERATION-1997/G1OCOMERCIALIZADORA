@@ -37,7 +37,7 @@ public class SystemApp {
 	private String description;
 	
 	@NotEmpty(message = "La palabra clave del Sistema es necesario")
-	@Column(nullable = false, length = 50, name = "keyword_sistema")
+	@Column(nullable = false, length = 50, name = "keyword_sistema", unique = true)
 	private String keyword;
 	
 	
