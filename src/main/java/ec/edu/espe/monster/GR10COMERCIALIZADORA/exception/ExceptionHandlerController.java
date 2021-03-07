@@ -24,4 +24,11 @@ public class ExceptionHandlerController {
 		return "/error/500";
 	}
 	
+	@ExceptionHandler(DataCustomException.class)
+	public String dataCustomExceptionHandler(DataCustomException ex, Model model) {
+		model.addAttribute("message", ex.getMessage());
+		model.addAttribute("entity", ex.getEntity() );
+		model.addAttribute("descriptionAccionFail", ex.getDescriptionAccionFail());
+		return "/error/409";
+	}
 }

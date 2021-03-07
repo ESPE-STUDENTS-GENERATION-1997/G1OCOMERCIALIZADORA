@@ -13,8 +13,11 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "ciudades")
+@Data
 public class City {
 
 	@Id
