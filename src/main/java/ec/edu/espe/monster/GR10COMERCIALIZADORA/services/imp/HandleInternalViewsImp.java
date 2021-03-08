@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IProfileUserDAO;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IResourceSystemDAO;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IResourcesOfSystemDAO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IUserAppDAO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.exception.AuthenticationCustomException;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.exception.AuthenticationExceptionCodes;
@@ -18,7 +18,8 @@ import ec.edu.espe.monster.GR10COMERCIALIZADORA.exception.BusinessLogicException
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.MenuItemDTO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.UserReportProfilesDTO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.ProfileUser;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.ResourceSystem;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.Resource;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.ResourcesOfSystem;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.SystemApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IHandleInternalViews;
@@ -38,7 +39,7 @@ public class HandleInternalViewsImp implements IHandleInternalViews{
 	private IProfileUserDAO iprofileUserDAO;
 	
 	@Autowired
-	private IResourceSystemDAO resourceSystemDAO;
+	private IResourcesOfSystemDAO resourcesOfSystemDAO; 
 
 	@Override
 	public List<MenuItemDTO> loadMenuByPrincipalUser(String userNickname) {
@@ -77,10 +78,11 @@ public class HandleInternalViewsImp implements IHandleInternalViews{
 	private List<MenuItemDTO> buildSubMenu(SystemApp  systemProfile){
 		List<MenuItemDTO> subMenu = new ArrayList<MenuItemDTO>();
 		
-		List<ResourceSystem> resources =  resourceSystemDAO.findBySystem(systemProfile);
+		List<ResourcesOfSystem> resourcesOfSystem =  resourcesOfSystemDAO.findBySystem(systemProfile);
 		
-		for(ResourceSystem resource: resources ) {
+		for(ResourcesOfSystem resourceOfSys: resourcesOfSystem ) {
 			MenuItemDTO item = new MenuItemDTO();
+			Resource resource = resourceOfSys.getResource();
 			item.setIsMenuCategory(false);
 			item.setName(resource.getNameMenu());
 			item.setUrl(resource.getUrl());

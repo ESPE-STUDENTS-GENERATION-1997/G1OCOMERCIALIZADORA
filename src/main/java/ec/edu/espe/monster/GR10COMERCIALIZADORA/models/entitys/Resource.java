@@ -1,13 +1,15 @@
 package ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -16,9 +18,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Entity
-@Table(name = "XEREC_RECSIS")
+@Table(name = "XEREC_RECUR")
 @Data
-public class ResourceSystem {
+public class Resource {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +42,8 @@ public class ResourceSystem {
 	@Column( length = 300, name = "descripcion_recurso")
 	private String description;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sistema",nullable = false)
+	@OneToMany(mappedBy = "resource", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
-	private SystemApp system;
+	private Set<ResourcesOfSystem> resourcesOfSystem;
+	
 }

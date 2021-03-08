@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/internt-layout.html :: 'head' "></head>
+<body>
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
+	<main class="container mt-3">
+		<h1 class="mt-4">.</h1>
+		<section class="row">
+			<div class="col">
+				<table class="table">
+					<thead class="table-dark">
+						<tr>
+							<th scope="col">Nombre Menú</th>
+							<th scope="col">Título Página</th>
+							<th scope="col">Descripción</th>
+							<th scope="col">url</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+	<footer th:replace="layouts/internt-layout.html :: 'footer'">
+	</footer>
+</body>
+</html>

@@ -52,11 +52,12 @@ public class SystemApp {
 	@JsonIgnore
 	private Set<SystemApp> subSystems;
 	
-	@OneToMany(mappedBy = "system", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<ResourceSystem> resources;
 	
 	@OneToMany(mappedBy = "systemProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<ProfileUser> profiles;
+	
+	@OneToMany(mappedBy = "system", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<ResourcesOfSystem> resourcesOfSystem;
 }
