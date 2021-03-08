@@ -21,6 +21,7 @@
 									correo: item.email_customer,
 									telefono: item.phone_customer,
 									address: item.address_customer,
+									code: item.id_customer,
 								};
 						}));
 					},
@@ -29,6 +30,7 @@
 			select: function(event,ui){
 				$("#buscar_cliente").val(ui.item.label);
 				
+				$("#customer").val(ui.item.code);
 				$("#names_costumer").val(ui.item.label);
 				$("#document_costumer").val(ui.item.value);
 				$("#email_costumer").val(ui.item.correo);

@@ -43,4 +43,21 @@ public class CustomerServiceImpl implements ICustomerService{
 	public Product findProductById(Long id) {
 		return productRepository.findById(id).orElse(null);
 	}
+
+	@Override
+	public List<Customer> listCustomers() {
+		return (List<Customer>) customerRepository.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Customer findOneCostumer(Long id) {
+		return customerRepository.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Factura findFacturaById(Long id) {
+		return facturaRepository.findById(id).orElse(null);
+	}
 }

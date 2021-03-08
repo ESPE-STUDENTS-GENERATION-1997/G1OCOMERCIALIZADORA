@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.Product;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IHandleInternalViews;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IProductService;
 
 @Controller
@@ -30,14 +32,18 @@ public class ProductController {
 	@Autowired
 	private IProductService productService;
 	
+	@Autowired
+	private IHandleInternalViews handlerInternalViews;
+	
 	@GetMapping({"", "/", "/store", "/store/home"})
 	public String indexStore() {
 		return "/store/home";
 	}
 	
 	@GetMapping(value="/store/products")
-	public String listProducts(Model model)
+	public String listProducts(Model model,Principal principal)
 	{
+		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
 		List<Product> listProducts = productService.listProducts();
 		Product product = new Product();
 		model.addAttribute("titulo", "Listado de Productos");
@@ -79,11 +85,33 @@ public class ProductController {
 	}
 	
 	@PostMapping(value="/editProduct")
-	public String editProduct(@ModelAttribute Product product ,RedirectAttributes flash)
-	{	
+	public String editProduct(@ModelAttribute Product product , @ModelAttribute MultipartFile img_product_edit , RedirectAttributes flash)
+	{
+		if(img_product_edit.isEmpty())
+		{
+			productService.addProduct(product);
+			flash.addFlashAttribute("success", "Operación exitosa");
+		}
+		else
+		{
+			String uniqueFileName = UUID.randomUUID().toString() + "_" + img_product_edit.getOriginalFilename();
+			Path rootPath = Paths.get("uploads").resolve(uniqueFileName);
+			Path rootAbsolutePath = rootPath.toAbsolutePath();
+			
+			try {
+				Files.copy(img_product_edit.getInputStream(), rootAbsolutePath);
+				product.setImg_product(uniqueFileName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			productService.addProduct(product);
+			flash.addFlashAttribute("success", "Operación exitosa");
+		}
+		
+		/**
 		productService.addProduct(product);
 		flash.addFlashAttribute("success", "Operación exitosa");
-		
+		**/
 		return "redirect:/store/products";
 	}
 	
@@ -97,6 +125,11 @@ public class ProductController {
 		}
 		flash.addFlashAttribute("error", "Producto eliminado correctamente");
 		return("redirect:/store/products");
+	}
+	
+	@ModelAttribute(name = "titlePage")
+	public String addTittlePage() {
+		return "Gestión de Productos";
 	}
 	
 }

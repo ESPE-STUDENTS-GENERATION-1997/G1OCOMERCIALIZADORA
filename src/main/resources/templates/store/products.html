@@ -1,43 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="layouts/public-layout.html :: 'head' ">
-</head>
+<head th:replace="layouts/internt-layout.html :: 'head' "></head>
 <body id="page-top">
-	<!-- Navigation-->
-	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-		<div class="container" sec:authorize="isAuthenticated()">
-			<a class="navbar-brand js-scroll-trigger" href="#page-top">Los
-				Chinitos</a>
-			<button class="navbar-toggler navbar-toggler-right" type="button"
-				data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">
-				Menu <i class="fas fa-bars ml-1"></i>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav text-uppercase ml-auto">
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						th:href="@{/store/home}">Menú Principal</a></li>
-					<!-- ENLACE A USUARIOS -->
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						th:href="@{/store/factura}">Facturación</a></li>
-
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#team"> <span class="btn btn-light btn-sm"
-							sec:authentication="name"></span></a></li>
-
-					<li class="nav-item">
-						<form th:action="@{/logout}" class="nav-link js-scroll-trigger"
-							method="post">
-							<button class="btn btn-danger btn-sm" type="submit">CERRAR
-								SESIÓN</button>
-						</form>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
 	<br>
 	<br>
 	<br>
@@ -199,6 +165,7 @@
 						</div>
 						<div style="width:110px; margin-left:20px">
 							<img id="img_product_mostrar" alt="" src="" style="width: 130%;">
+							<input type="file" id="img_product_edit" name="img_product_edit"/>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -225,5 +192,5 @@
 
 
 </body>
-<footer th:replace="layouts/public-layout.html :: 'footer' "> </footer>
+<footer th:replace="layouts/internt-layout.html :: 'footer' "></footer>
 </html>

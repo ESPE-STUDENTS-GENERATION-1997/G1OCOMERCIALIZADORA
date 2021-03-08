@@ -1,10 +1,13 @@
 package ec.edu.espe.monster.GR10COMERCIALIZADORA.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +19,7 @@ import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.Factura;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.ItemFactura;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.Product;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ICustomerService;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IHandleInternalViews;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IProductService;
 
 @Controller
@@ -27,9 +31,13 @@ public class FacturacionController {
 	@Autowired
 	private IProductService productService;
 	
+	@Autowired
+	private IHandleInternalViews handlerInternalViews;
+	
 	@GetMapping("/store/factura")
-	public String facturacion()
+	public String facturacion(Model model,Principal principal)
 	{
+		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
 		return "/store/factura";
 	}
 	
@@ -63,4 +71,19 @@ public class FacturacionController {
 		flash.addFlashAttribute("success", "Factura creada con éxito");
 		return "redirect:/store/products";
 	}
+	
+	@ModelAttribute(name = "titlePage")
+	public String addTittlePage() {
+		return "Generar una factura";
+	}
+	
+	@GetMapping("/factura/{id}")
+	public String getFactura(@PathVariable(value="id_factura") Long id_factura,Model model,RedirectAttributes flash)
+	{
+		Factura factura = customerService.findFacturaById(id_factura);
+		model.addAttribute("factura", factura);
+		model.addAttribute("titulo","Factura: "+factura.getDescripcion_factura()+" con el código"+factura.getId_factura());
+		return"/store/detalle-factura";
+	}
+	
 }
