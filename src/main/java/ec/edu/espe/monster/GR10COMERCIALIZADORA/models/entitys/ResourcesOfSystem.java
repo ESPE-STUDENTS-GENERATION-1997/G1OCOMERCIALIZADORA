@@ -18,36 +18,29 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Entity
-@Table(name = "XEPER_PERFIL")
+@Table(name = "XERES_RECSYS")
 @Data
-public class ProfileUser implements Serializable{
-
+public class ResourcesOfSystem   implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "codigo_perfil")
-	private Long code;
+	@Column(name = "codigo_rec_sis")
+	private Long id;
 	
-	@Column(  name = "fec_asignacion_perfil",  nullable = false)
+	@Column(  name = "fec_asignacion_sis_rec",  nullable = false)
 	private LocalDateTime assignmentDate;
-	
-	@Column(  name = "fec_expiracion_perfil")
-	private LocalDateTime expirationDate;
-	
+
 	@Column( name = "fec_modificacion_perfil")
 	private LocalDateTime modifiedDate;
-	
-	@Column( length = 300, name = "observation_perfil")
-	private String observation;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_cod_user_perfil",nullable = false)
-	@JsonIgnore
-	private UserApp userProfile;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_id_sistema",nullable = false)
 	@JsonIgnore
-	private SystemApp systemProfile;
+	private SystemApp system;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fk_cod_recurso",nullable = false)
+	@JsonIgnore
+	private Resource resource;
 }
