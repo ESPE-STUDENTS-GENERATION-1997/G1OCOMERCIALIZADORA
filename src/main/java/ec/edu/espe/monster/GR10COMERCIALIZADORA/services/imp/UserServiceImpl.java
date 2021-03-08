@@ -100,7 +100,7 @@ public class UserServiceImpl implements IUserService {
 		this.savePermissonsToUserRegister(newUser, request.getPermissons());
 
 		String message = String.format(
-				"\n\nBienvenido su username es: %s" + " \n\n Su password para ingresar por primera vez es: $",
+				"\n\nBienvenido su username es: %s" + " \n\n Su password para ingresar por primera vez es: %s",
 				request.getNickname(), password);
 
 		sendMailService.sendMail("comercializadorachinitos@gmail.com", newUser.getEmail(), "Acceso por primera vez",
