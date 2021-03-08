@@ -60,4 +60,9 @@ public class CustomerServiceImpl implements ICustomerService{
 	public Factura findFacturaById(Long id) {
 		return facturaRepository.findById(id).orElse(null);
 	}
+
+	@Override
+	public void addCustomer(Customer customer) {
+		customerRepository.save(customer);
+	}
 }

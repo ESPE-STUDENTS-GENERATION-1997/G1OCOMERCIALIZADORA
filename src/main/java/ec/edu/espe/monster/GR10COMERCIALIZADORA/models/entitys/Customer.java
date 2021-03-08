@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity
@@ -21,6 +23,7 @@ import lombok.Data;
 @Data
 public class Customer implements Serializable {
 
+	private static final long serialVersionUID = -4846444598863013873L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_customer;
@@ -32,17 +35,15 @@ public class Customer implements Serializable {
 	private String address_customer;
 	
 	@OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Factura> facturas;
 	public Customer()
 	{
 		facturas = new ArrayList<Factura>();
 	}
-	
+	@JsonIgnore
 	public void addFactura(Factura factura)
 	{
 		facturas.add(factura);
 	}
-	
-	private static final long serialVersionUID = 1L;
-
 }

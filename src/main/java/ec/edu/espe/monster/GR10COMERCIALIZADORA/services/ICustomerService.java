@@ -17,4 +17,5 @@ public interface ICustomerService {
 	public Product findProductById(Long id);
 	public Customer findOneCostumer(Long id);
 	public Factura findFacturaById(Long id);
+	public void addCustomer(Customer customer);
 }

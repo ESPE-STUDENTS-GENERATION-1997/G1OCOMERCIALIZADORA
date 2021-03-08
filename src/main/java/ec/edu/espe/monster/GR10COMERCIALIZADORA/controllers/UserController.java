@@ -2,14 +2,18 @@ package ec.edu.espe.monster.GR10COMERCIALIZADORA.controllers;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.editors.SystemAppEditorByKeyword;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.editors.UserTypeEditor;
@@ -70,10 +74,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/newUser")
-	public String newUser(UserRegisterDTO userRegisterRequest)
+	public String newUser(@Valid UserRegisterDTO userRegisterRequest, RedirectAttributes flash)
 	{
 		userService.saveUserWithPermisson(userRegisterRequest);
-		
+		flash.addFlashAttribute("success", "Usuario agregado correctamente");
 		return "redirect:/users/index";
 	}
 	

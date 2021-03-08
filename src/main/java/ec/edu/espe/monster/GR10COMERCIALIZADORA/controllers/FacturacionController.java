@@ -3,6 +3,7 @@ package ec.edu.espe.monster.GR10COMERCIALIZADORA.controllers;
 import java.security.Principal;
 import java.util.List;
 
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,7 +70,7 @@ public class FacturacionController {
 		}
 		customerService.saveFactura(factura);
 		flash.addFlashAttribute("success", "Factura creada con éxito");
-		return "redirect:/store/products";
+		return "redirect:/fact-cliente/"+factura.getCustomer().getId_customer();
 	}
 	
 	@ModelAttribute(name = "titlePage")
@@ -77,12 +78,12 @@ public class FacturacionController {
 		return "Generar una factura";
 	}
 	
-	@GetMapping("/factura/{id}")
+	@GetMapping("/factura/{id_factura}")
 	public String getFactura(@PathVariable(value="id_factura") Long id_factura,Model model,RedirectAttributes flash)
 	{
 		Factura factura = customerService.findFacturaById(id_factura);
 		model.addAttribute("factura", factura);
-		model.addAttribute("titulo","Factura: "+factura.getDescripcion_factura()+" con el código"+factura.getId_factura());
+		model.addAttribute("titulo","Factura: "+factura.getDescripcion_factura()+" con el código: "+factura.getId_factura());
 		return"/store/detalle-factura";
 	}
 	

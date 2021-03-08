@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,18 +38,22 @@ public class UserApp implements Serializable{
 	
 	
 	@Column(nullable = false, length = 100, name = "username_usuario", unique = true)
+	@NotEmpty
 	private String nickname;
 	
 	@Column(nullable = false, length = 90, name = "password_usuario")
 	private String password;
 	
 	@Column( length = 150, name = "nombres_usuario", nullable = false)
+	@NotEmpty
 	private String names;
 	
 	@Column( length = 150, name = "apellidos_usuario", nullable = false)
+	@NotEmpty
 	private String lastnames;
 	
 	@Column( length = 100, name = "correo_usuario", nullable = false)
+	@Email
 	private String email;
 	
 	@Column( length = 30, name = "telefono_usuario")
