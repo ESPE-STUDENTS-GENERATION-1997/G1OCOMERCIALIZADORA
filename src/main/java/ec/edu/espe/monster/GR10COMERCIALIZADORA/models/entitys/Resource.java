@@ -28,7 +28,7 @@ public class Resource {
 	private Long id;
 
 	@NotEmpty(message = "La url del recurso es necesaria")
-	@Column(nullable = false, name = "url_recurso")
+	@Column(nullable = false, name = "url_recurso", unique = true)
 	private String url;
 	
 	@NotEmpty(message = "El nombre del recurso para el menú es necesario.")

@@ -32,6 +32,7 @@ public class UserApp implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "codigo_usuario")
+	@JsonIgnore
 	private Long code;
 	
 	
@@ -39,6 +40,7 @@ public class UserApp implements Serializable{
 	private String nickname;
 	
 	@Column(nullable = false, length = 90, name = "password_usuario")
+	@JsonIgnore
 	private String password;
 	
 	@Column( length = 150, name = "nombres_usuario", nullable = false)

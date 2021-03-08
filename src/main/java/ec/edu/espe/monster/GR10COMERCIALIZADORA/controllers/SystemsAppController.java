@@ -9,27 +9,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IHandleInternalViews;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IResourcesAppServices;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ISystemAppServices;
 
 @Controller
-public class ResourcesAppController {
-	
+public class SystemsAppController {
+
 	@Autowired
-	private IResourcesAppServices resourcesAppServices;
+	private ISystemAppServices systemAppServices;
 	
 	@Autowired
 	private IHandleInternalViews handlerInternalViews;
 	
-	@GetMapping("/config/pages")
+	@GetMapping("/config/systems")
 	public String index(Model model, Principal principal) {
 		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
-		model.addAttribute("pages", resourcesAppServices.getAll());
-		return "/config/resources";
+		model.addAttribute("systemsApp", systemAppServices.getAllSystems());
+		return "/config/systems";
 	}
 	
 	@ModelAttribute(name = "titlePage")
 	public String addTittlePage() {
-		return "Configuración de Páginas de la Aplicación";
+		return "Configuración de los Sistemas del Aplicativo";
 	}
-	
 }
