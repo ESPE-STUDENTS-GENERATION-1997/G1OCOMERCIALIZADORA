@@ -15,7 +15,7 @@ public class RedirectLogin implements IRedirectLogin {
 		String path = "/store/home";
 		switch (userType) {
 		case EXTERNO_CLIENTE:
-			path = "/store/home";
+			path = "redirect: /store/home";
 			break;
 		case INTERNO:
 			path = "redirect:/internal/home";

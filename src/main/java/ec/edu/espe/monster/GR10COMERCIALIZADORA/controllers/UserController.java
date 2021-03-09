@@ -17,12 +17,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.editors.SystemAppEditorByKeyword;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.editors.UserTypeEditor;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.GenerateTempCredentialRequestDTO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.UserRegisterDTO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.constances.UserType;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.SystemApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IAddressHomeService;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ICitysServices;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ICredentialServices;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IHandleInternalViews;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ISystemAppServices;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IUserService;
@@ -54,6 +56,11 @@ public class UserController {
 	@Autowired
 	private SystemAppEditorByKeyword systemEditor;
 	
+	
+	@Autowired
+	private ICredentialServices credentialServices;
+	
+	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.registerCustomEditor(UserType.class, "type", userTypeEditor);
@@ -71,6 +78,12 @@ public class UserController {
 		model.addAttribute("types",UserType.values());
 		model.addAttribute("citys",cityServices.getAllCitys());
 		return "/users/users-view";
+	}
+	
+	@PostMapping("/user/temp-credential/generation")
+	public String generateTempCredentials(GenerateTempCredentialRequestDTO request) {
+		credentialServices.generateTempCredentials(request);
+		return "redirect:/users/index";
 	}
 	
 	@PostMapping("/newUser")

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IStateUserDAO;
@@ -65,13 +66,20 @@ public class StateUserImpl implements IStateUserService {
 
 	@Override
 	public void saveStateToUserByKeyword(StateUser state, UserApp user, KeywordsApplication keywordState) {
-		// TODO Auto-generated method stub
+		States stateRegister = statesServices.getStateByKeyword(keywordState);
+		state.setState(stateRegister);
+		this.saveStateToUser(state, user);
 		
 	}
 
 	@Override
 	public void saveStateToUser(StateUser stateUser, UserApp user) {
-		// TODO Auto-generated method stub
+		try {
+			stateUser.setUser(user);
+			stateRepository.save(stateUser);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	

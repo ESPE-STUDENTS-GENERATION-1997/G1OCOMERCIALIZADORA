@@ -99,7 +99,6 @@ public class LoginServicesImp implements ILoginServices {
 			throw new AuthenticationCustomException("Nombre de usuario o contraseña incorrecta, por favor vuelve a intentarlo.",
 					"/onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
 		}
-		
 		UserApp user = userDAO.findByNickname(loginRequest.getUsername()).orElseThrow(() -> {
 			log.error("[ERROR USER NOT FOUND]");
 			return new UsernameNotFoundException("Credenciales invalidas");
@@ -118,6 +117,7 @@ public class LoginServicesImp implements ILoginServices {
 		} else if (stateUser.getState() != null) {
 			States state = stateUser.getState();
 
+			log.info("[STATE USER AUTH] " + state.getKeyword() );
 			switch (state.getKeyword()) {
 			case "E001":
 				throw new AuthenticationCustomException("Al ser la primera vez que ingresa debe cambiar su contraseña",

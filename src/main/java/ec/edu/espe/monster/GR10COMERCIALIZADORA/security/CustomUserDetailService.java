@@ -39,7 +39,6 @@ public class CustomUserDetailService implements UserDetailsService {
 			log.error("[ERROR USER NOT FOUND]");
 			return new UsernameNotFoundException("Credenciales invalidas");
 		});
-
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		// TODO: cargar roles del usuario
 		authorities.add(new SimpleGrantedAuthority("ADMIN"));
