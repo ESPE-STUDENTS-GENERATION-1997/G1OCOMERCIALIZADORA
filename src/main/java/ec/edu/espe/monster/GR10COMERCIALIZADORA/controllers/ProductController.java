@@ -35,7 +35,7 @@ public class ProductController {
 	@Autowired
 	private IHandleInternalViews handlerInternalViews;
 	
-	@GetMapping({"", "/", "/store", "/store/home"})
+	@GetMapping({"/store", "/store/home"})
 	public String indexStore() {
 		return "/store/home";
 	}
