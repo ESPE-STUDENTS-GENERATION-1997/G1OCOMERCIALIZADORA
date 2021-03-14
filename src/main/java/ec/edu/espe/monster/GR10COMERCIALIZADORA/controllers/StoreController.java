@@ -8,7 +8,7 @@ public class StoreController {
 	
 	@GetMapping({"", "/"})
 	public String indexStore() {
-		return "/store/home";
+		return "store/home";
 	}
 	
 	
