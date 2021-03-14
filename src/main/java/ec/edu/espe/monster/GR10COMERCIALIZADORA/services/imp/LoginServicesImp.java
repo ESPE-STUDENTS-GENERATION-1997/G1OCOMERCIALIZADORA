@@ -64,7 +64,7 @@ public class LoginServicesImp implements ILoginServices {
 		} else {
 			// TODO: lazar un 500
 		}
-		return "/onboarding/login";
+		return "onboarding/login";
 	}
 
 	@Override
@@ -77,27 +77,27 @@ public class LoginServicesImp implements ILoginServices {
 		}catch (BadCredentialsException e) {
 			log.error("[BAD-CREDENCIAL] user: {}", loginRequest.getUsername());
 			throw new AuthenticationCustomException("Nombre de usuario o contraseña incorrecta, por favor vuelve a intentarlo.",
-					"/onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
+					"onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
 		}catch (LockedException e) {
 			log.error("[LOCKED ] user: {}", loginRequest.getUsername());
 			throw new AuthenticationCustomException("Nombre de usuario o contraseña incorrecta, por favor vuelve a intentarlo.",
-					"/onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
+					"onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
 		} catch (DisabledException e) {
 			log.error("[DISABLE USER] user: {}", loginRequest.getUsername());
 			throw new AuthenticationCustomException("Nombre de usuario o contraseña incorrecta, por favor vuelve a intentarlo.",
-					"/onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
+					"onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
 		} catch (AccountExpiredException e) {
 			log.error("[Expired-account]");
 			throw new AuthenticationCustomException("Nombre de usuario o contraseña incorrecta, por favor vuelve a intentarlo.",
-					"/onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
+					"onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
 		} catch (CredentialsExpiredException e) {
 			log.error("[Expired-credencial]");
 			throw new AuthenticationCustomException("Nombre de usuario o contraseña incorrecta, por favor vuelve a intentarlo.",
-					"/onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
+					"onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
 		} catch (AuthenticationException e) {
 			log.error("[AuthenticationException]   " + e.getMessage());
 			throw new AuthenticationCustomException("Nombre de usuario o contraseña incorrecta, por favor vuelve a intentarlo.",
-					"/onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
+					"onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
 		}
 		UserApp user = userDAO.findByNickname(loginRequest.getUsername()).orElseThrow(() -> {
 			log.error("[ERROR USER NOT FOUND]");
@@ -121,7 +121,7 @@ public class LoginServicesImp implements ILoginServices {
 			switch (state.getKeyword()) {
 			case "E001":
 				throw new AuthenticationCustomException("Al ser la primera vez que ingresa debe cambiar su contraseña",
-						"/onboarding/change-credentials", AuthenticationExceptionCodes.STATE_USER_UPDATE_CREDENTIAL);
+						"onboarding/change-credentials", AuthenticationExceptionCodes.STATE_USER_UPDATE_CREDENTIAL);
 			case "E002":
 				break;
 			case "E003":
@@ -132,14 +132,14 @@ public class LoginServicesImp implements ILoginServices {
 				if (stateUser.getExpirationDatta() != null) {
 					if (stateUser.getExpirationDatta().isBefore(LocalDateTime.now())) {
 						throw new AuthenticationCustomException("Las credenciales temporales expiraron.",
-								"/onboarding/login", AuthenticationExceptionCodes.STATE_USER_EXPIRED_CREDENTIAL);
+								"onboarding/login", AuthenticationExceptionCodes.STATE_USER_EXPIRED_CREDENTIAL);
 					} else {
 						throw new AuthenticationCustomException("Cambie sus credenciales temporales",
-								"/onboarding/change-credentials", AuthenticationExceptionCodes.STATE_USER_UPDATE_TEMP_CREDENTIAL);
+								"onboarding/change-credentials", AuthenticationExceptionCodes.STATE_USER_UPDATE_TEMP_CREDENTIAL);
 					}
 				} else {
 					throw new AuthenticationCustomException("Las credenciales temporales expiraron.",
-							"/onboarding/login", AuthenticationExceptionCodes.STATE_USER_EXPIRED_CREDENTIAL);
+							"onboarding/login", AuthenticationExceptionCodes.STATE_USER_EXPIRED_CREDENTIAL);
 				}
 
 			default:

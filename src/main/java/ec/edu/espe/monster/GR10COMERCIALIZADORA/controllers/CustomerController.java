@@ -35,7 +35,7 @@ public class CustomerController {
 		model.addAttribute("titulo", "Listado de Clientes");
 		model.addAttribute("customers", listCustomers);
 		model.addAttribute("customer",customer);
-		return "/store/customers";
+		return "store/customers";
 	}
 	
 	@GetMapping(value="/fact-cliente/{id_costumer}")

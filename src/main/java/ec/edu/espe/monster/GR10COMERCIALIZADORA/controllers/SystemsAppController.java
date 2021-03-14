@@ -24,7 +24,7 @@ public class SystemsAppController {
 	public String index(Model model, Principal principal) {
 		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
 		model.addAttribute("systemsApp", systemAppServices.getAllSystems());
-		return "/config/systems";
+		return "config/systems";
 	}
 	
 	@ModelAttribute(name = "titlePage")

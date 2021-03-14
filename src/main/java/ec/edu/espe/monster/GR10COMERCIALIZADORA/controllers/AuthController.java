@@ -37,12 +37,12 @@ public class AuthController {
 	
 	@GetMapping("/signup")
 	public String signup(Model model, Principal principal) {
-		return "/onboarding/register";
+		return "onboarding/register";
 	}
 	
 	@GetMapping("/auth/change-credentials")
 	public String changeCredential(Model model, Principal principal) {
-		return "/onboarding/change-credentials";
+		return "onboarding/change-credentials";
 	}
 	
 	@PostMapping("/auth/change-credentials")

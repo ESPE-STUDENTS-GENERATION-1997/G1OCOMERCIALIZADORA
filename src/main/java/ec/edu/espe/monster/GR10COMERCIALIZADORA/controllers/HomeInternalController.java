@@ -29,7 +29,7 @@ public class HomeInternalController {
 	public String index(Model model, Principal principal) {
 		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
 		model.addAttribute("reportProfiles", handlerInternalViews.createReportUserProfiles(principal.getName()));
-		return "/management/index";
+		return "management/index";
 	}
 	
 	@ModelAttribute(name = "titlePage")

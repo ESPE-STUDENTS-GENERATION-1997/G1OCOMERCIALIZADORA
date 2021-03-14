@@ -77,7 +77,7 @@ public class UserController {
 		model.addAttribute("systemsApp",systemAppServices.getAllSystems());
 		model.addAttribute("types",UserType.values());
 		model.addAttribute("citys",cityServices.getAllCitys());
-		return "/users/users-view";
+		return "users/users-view";
 	}
 	
 	@PostMapping("/user/temp-credential/generation")

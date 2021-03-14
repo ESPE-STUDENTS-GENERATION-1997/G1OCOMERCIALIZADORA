@@ -37,7 +37,7 @@ public class ProductController {
 	
 	@GetMapping({"/store", "/store/home"})
 	public String indexStore() {
-		return "/store/home";
+		return "store/home";
 	}
 	
 	@GetMapping(value="/store/products")
@@ -49,7 +49,7 @@ public class ProductController {
 		model.addAttribute("titulo", "Listado de Productos");
 		model.addAttribute("productos", listProducts);
 		model.addAttribute("product",product);
-		return "/store/products";
+		return "store/products";
 	}
 	
 	@PostMapping(value="/addProduct")

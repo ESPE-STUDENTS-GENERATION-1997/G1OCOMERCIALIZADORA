@@ -34,7 +34,7 @@ public class PermissonsUserController {
 	public String index(Model model, Principal principal) {
 		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
 		model.addAttribute("usuarios",userService.listUsers());
-		return "/users/permissons";
+		return "users/permissons";
 	}
 	
 	@PostMapping("/users/permissons/update")

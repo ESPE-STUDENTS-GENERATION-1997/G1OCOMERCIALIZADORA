@@ -24,7 +24,7 @@ public class ResourcesAppController {
 	public String index(Model model, Principal principal) {
 		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
 		model.addAttribute("pages", resourcesAppServices.getAll());
-		return "/config/resources";
+		return "config/resources";
 	}
 	
 	@ModelAttribute(name = "titlePage")

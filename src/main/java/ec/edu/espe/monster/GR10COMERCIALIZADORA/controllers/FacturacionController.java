@@ -39,7 +39,7 @@ public class FacturacionController {
 	public String facturacion(Model model,Principal principal)
 	{
 		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
-		return "/store/factura";
+		return "store/factura";
 	}
 	
 	@GetMapping(value="/cargar-cliente/{term}", produces= {"application/json"})
@@ -84,7 +84,7 @@ public class FacturacionController {
 		Factura factura = customerService.findFacturaById(id_factura);
 		model.addAttribute("factura", factura);
 		model.addAttribute("titulo","Factura: "+factura.getDescripcion_factura()+" con el código: "+factura.getId_factura());
-		return"/store/detalle-factura";
+		return"store/detalle-factura";
 	}
 	
 }
