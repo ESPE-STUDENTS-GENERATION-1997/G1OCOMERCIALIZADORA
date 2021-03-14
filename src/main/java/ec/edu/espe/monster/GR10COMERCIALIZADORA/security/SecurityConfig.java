@@ -67,7 +67,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter{
 		.addFilter(new AuthenticationCustomFilter(this.authenticationManager()))
 		.logout().permitAll()
 		.and()
-		.exceptionHandling().accessDeniedPage("/error_403");
+		.exceptionHandling().accessDeniedPage("/error/error_403");
 	}
 	
 	

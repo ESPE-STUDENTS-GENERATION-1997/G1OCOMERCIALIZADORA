@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/internt-layout.html :: 'head' "></head>
+<body id="page-top">
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
+	<br>
+	<br>
+	<br>
+	<br>
+	
+	<div class="alert alert-success" th:if="${success!=null}" th:text="${success}"></div>
+	<div class="alert alert-danger" th:if="${danger!=null}" th:text="${error}"></div>
+	<div class="alert alert-warning" th:if="${warning!=null}" th:text="${warning}"></div>
+	<div class="alert alert-info" th:if="${info!=null}" th:text="${info}"></div>
+	
+	<div class="container py-4">
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+				<h4 class="card-title">
+					<a th:href="@{'/fact-cliente/'+${factura.customer.id_customer}}" class="btn btn-light btn-xs">&laquo; Volver</a>
+					<a class="btn btn-danger btn-xs float-right" th:href="@{'/factura/'+${factura.id_factura}(format=pdf)}">Exportar PDF</a>
+				</h4>
+				<ul class="list-group my-2">
+					<li class="list-group-item list-group-item-primary" th:text="'Datos del cliente'"></li>
+					<li class="list-group-item" th:text="${factura.customer.names_customer} + ' ' + ${factura.customer.lastnames_customer}"></li>
+					<li class="list-group-item" th:text="${factura.customer.email_customer}"></li>
+				</ul>
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-success" th:text="'Datos de la factura'"></li>
+					<li class="list-group-item" th:text="'Cod de Factura: ' + ${factura.id_factura}"></li>
+					<li class="list-group-item" th:text="'Descripcion: ' + ${factura.descripcion_factura}"></li>
+					<li class="list-group-item" th:text="'Fecha: ' + ${factura.emision_factura}"></li>
+				</ul>
+				<table class="table table-striped table-hover table-bordered my-3">
+					<thead>
+						<tr>
+							<th>Producto</th>
+							<th>Precio</th>
+							<th>Cantidad</th>
+							<th>Total</th>
+							<th>Imagen Producto</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="linea: ${factura.items}">
+							<td th:text="${linea.product.name_product}"></td>
+							<td th:text="${linea.product.price_product}"></td>
+							<td th:text="${linea.cantidad_item}"></td>
+							<td th:text="${linea.calcularImporte()}"></td>
+							<td style="width:100px"><img class="img-responsive float-right" style="width: 120%;" th:src="@{'/uploads/'+${linea.product.img_product}}" th:alt="${linea.product.img_product}"> </td>
+						</tr>
+					</tbody>
+				</table>
+				<h5 class="float-right">Total de la Factura: <span th:text="${factura.total}" class="badge badge-secondary"></span></h5>
+			</div>
+		</div>
+	</div>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Third party plugin JS-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+	<!-- <script th:replace="store/js/product :: product-script"></script> -->
+
+
+</body>
+<footer th:replace="layouts/internt-layout.html :: 'footer' "></footer>
+</html>

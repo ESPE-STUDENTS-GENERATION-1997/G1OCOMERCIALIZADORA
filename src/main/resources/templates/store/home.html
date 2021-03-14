@@ -42,20 +42,29 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav text-uppercase ml-auto">
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#services">Servicios</a></li>
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#portfolio">Productos</a></li>
+					<!--<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="#services">Servicios</a></li>-->
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="#team">Desarrolladores</a></li>
-
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						   role="button" data-toggle="dropdown" aria-haspopup="true"
+						   aria-expanded="false"> Productos 
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" th:href="@{/store/products}">Gestión de productos</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" th:href="@{/store/factura}">Facturación</a>
+						</div>						
+					</li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#team"> <span
-							class="btn btn-light btn-sm" sec:authentication="name"></span></a></li>
-
+						href="#team"> <span class="btn btn-light btn-sm"
+							sec:authentication="name"></span></a></li>
 					<li class="nav-item">
-						<form th:action="@{/logout}" class="nav-link js-scroll-trigger" method="post">
-							<button   class="btn btn-danger btn-sm" type="submit">CERRAR SESIÓN</button>
+						<form th:action="@{/logout}" class="nav-link js-scroll-trigger"
+							method="post">
+							<button class="btn btn-danger btn-sm" type="submit">CERRAR
+								SESIÓN</button>
 						</form>
 					</li>
 				</ul>

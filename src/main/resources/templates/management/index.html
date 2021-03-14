@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/internt-layout.html :: 'head' "></head>
+<body>
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
+	<main class="container">
+		<section class="row justify-content-md-center">
+			<article class="card">
+				<img src="https://cdn.worldvectorlogo.com/logos/monster-graffio.svg"
+					class="card-img-top logo-home" alt="Logo-monster">
+				<div class="card-body">
+					<h5 class="card-title">
+						Bienvenido: <b sec:authentication="name"> </b> 
+						
+					</h5>
+					
+					
+					<div class="card-text"  th:if="${reportProfiles != null}">
+					<p th:text="${reportProfiles.observations}"> </p>
+					Sistemas que gestiona:
+					<ul th:each="profile : ${reportProfiles.profiles}">
+						<li th:text=${profile}></li>
+					</ul> 
+					</div>
+					 
+				</div>
+			</article>
+		</section>
+	</main>
+	<footer th:replace="layouts/internt-layout.html :: 'footer' ">
+	</footer>
+</body>
+</html>

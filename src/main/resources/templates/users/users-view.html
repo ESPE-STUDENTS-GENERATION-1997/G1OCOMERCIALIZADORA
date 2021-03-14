@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layouts/internt-layout.html :: 'head' ">
+</head>
+
+<body id="page-top ">
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
+
+	<div class="alert alert-success" th:if="${success!=null}"
+		th:text="${success}"></div>
+	<div class="alert alert-danger" th:if="${danger!=null}"
+		th:text="${error}"></div>
+	<div class="alert alert-warning" th:if="${warning!=null}"
+		th:text="${warning}"></div>
+	<div class="alert alert-info" th:if="${info!=null}" th:text="${info}"></div>
+
+	<div class="container mt-3 ml-2 mr-2"
+		style="min-width: 95%; max-width: 100%;">
+		<h1 class="mt-4" th:text="${titulo}"></h1>
+		<div class="form-group">
+			<div class="container">
+				<button class="btn btn-primary"
+					onclick="AbrirModalRegistroUsuario()">
+					<i class="glyphicon glyphicon-plus"></i>&nbsp;Nuevo Usuario
+				</button>
+			</div>
+		</div>
+		<br>
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">USERNAME</th>
+					<th scope="col">NOMBRES</th>
+					<th scope="col">APELLIDOS</th>
+					<th scope="col">TELEFONO</th>
+					<th scope="col">CORREO</th>
+					<th scope="col">ESTADO</th>
+					<th scope="col">CONTRASEÑA TEMPORAL</th>
+					<th scope="col">EDITAR</th>
+					<th scope="col">ELIMINAR</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="usu: ${usuarios}">
+					<th th:text="${usu.nickname}"></th>
+					<td th:text="${usu.names}"></td>
+					<td th:text="${usu.lastnames}"></td>
+					<td th:text="${usu.phone}"></td>
+					<td th:text="${usu.email}"></td>
+					<td th:text="${usu.currentState.state.description}"></td>
+					<td style="text-align: center;">
+						<button type="button" class="btn btn-secondary"
+							th:onclick="openDialog('D001',[[${usu}]])">
+							<i class="fas fa-lock"></i>
+						</button>
+					</td>
+					<td>
+						<button type="button" class="btn btn-primary"
+							th:onclick="openDialog('D002',[[${usu}]])">
+							<i class="far fa-edit"></i>
+						</button>
+					</td>
+					<td>
+
+						<button type="button" class="btn btn-danger"
+							th:onclick="openDialog('D003',[[${usu}]])">
+							<i class="fas fa-trash"></i>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<form method="post" th:object="${usuario}" th:action="@{/newUser}"
+		id="formUsuario">
+		<div class="modal fade" id="modal_registro_usuario" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title">
+							<b>Registro de Nuevo Usuario</b>
+						</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="row no-gutters">
+							<div class="col-12 col-sm-6 col-md-8">
+								<h4 style="text-align: center;">Datos Personales</h4>
+								<br>
+								<div class="form-group row">
+									&nbsp;&nbsp;&nbsp;<label for="" class="col-sm-4 col-form-label">Nombres</label>
+									<div class="col-sm-7">
+										<input type="text" th:field="*{names}" class="form-control"
+											id="names" placeholder="Ingrese los nombres" />
+									</div>
+								</div>
+								<div class="form-group row">
+									&nbsp;&nbsp;&nbsp;<label for="" class="col-sm-4 col-form-label">Apellidos</label>
+									<div class="col-sm-7">
+										<input type="text" th:field="*{lastnames}"
+											class="form-control" id="lastnames"
+											placeholder="Ingrese los apellidos" />
+									</div>
+								</div>
+								<div class="form-group row">
+									&nbsp;&nbsp;&nbsp;<label for="staticEmail"
+										class="col-sm-4 col-form-label">Cédula</label>
+									<div class="col-sm-7">
+										<input type="text" th:field="*{numDocument}"
+											class="form-control" id="numDocument"
+											placeholder="1700000001" /> <label for="" id="cedulaOK"
+											style="color: black;"></label> <input type="text"
+											id="validar_cedula" hidden>
+									</div>
+								</div>
+								<div class="form-group row">
+									&nbsp;&nbsp;&nbsp;<label for="staticEmail" class="col-sm-4 ">Tipo
+										de Usuario</label>
+									<div class="col-sm-7">
+										<select class="form-select" th:field="*{type}">
+											<option selected disabled value="0">Seleccione un
+												tipo</option>
+											<option th:each="typeUser: ${types}"
+												th:value="${typeUser.code}" th:text="${typeUser.name}"></option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-6 col-md-4">
+								<h5 class="text-center">Imagen del Usuario</h5>
+								<div class="card">
+									<img class="card-img-top card-user-img" src="/img/user.png"
+										alt="Card image cap" id="img_user">
+									<div class="card-body" style="width: auto;">
+										<input type="file" value="Seleccionar archivo"
+											style="color: transparent; background-color: transparent;"
+											id="img_input" src="" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<ul class="nav   nav-tabs justify-content-center" id="myTab"
+							role="tablist">
+							<li class="nav-item"><a class="nav-link active"
+								id="home-tab" data-toggle="tab" href="#home" role="tab"
+								aria-controls="home" aria-selected="true">Datos de contacto</a></li>
+							<li class="nav-item"><a class="nav-link" id="profile-tab"
+								data-toggle="tab" href="#profile" role="tab"
+								aria-controls="profile" aria-selected="false">Cuenta de
+									usuario</a></li>
+							<li class="nav-item"><a class="nav-link" id="profile-tab"
+								data-toggle="tab" href="#addressHome" role="tab"
+								aria-controls="permissions" aria-selected="false">Domicilio</a></li>
+							<li class="nav-item"><a class="nav-link" id="profile-tab"
+								data-toggle="tab" href="#permissions" role="tab"
+								aria-controls="permissions" aria-selected="false">Permisos</a></li>
+						</ul>
+
+
+						<div class="tab-content" id="myTabContent">
+
+							<div class="tab-pane fade show active" id="home" role="tabpanel"
+								aria-labelledby="home-tab">
+								<br>
+								<div class="form-group row">
+									<label for="" class="ml-1 col-sm-3 col-form-label">Correo
+										Electrónico</label>
+									<div class="col-sm-8">
+										<input type="text" th:field="*{email}" class="form-control"
+											id="email" placeholder="user@example.com" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="" class="ml-1 col-sm-3 col-form-label">Teléfono
+										celular</label>
+									<div class="col-sm-8">
+										<input type="text" th:field="*{phone}" class="form-control"
+											id="phone" placeholder="022000001" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="" class="ml-1 col-sm-3 col-form-label">Discapacidad</label>
+									<div class="col-sm-8">
+										<input type="text" th:field="*{disability}"
+											class="form-control" id="disability" />
+									</div>
+								</div>
+
+							</div>
+
+							<div class="tab-pane fade" id="profile" role="tabpanel"
+								aria-labelledby="profile-tab">
+								<br>
+								<div class="form-group row">
+									&nbsp;&nbsp;&nbsp;<label for="" class="col-sm-4 col-form-label">Nombre
+										de usuario</label>
+									<div class="col-sm-7">
+										<input type="text" th:field="*{nickname}" class="form-control"
+											id="nickname" placeholder="Ingrese el nombre de usuario" />
+										<br>
+									</div>
+								</div>
+								<div class="form-group row">
+									&nbsp;&nbsp;&nbsp;<label for="" class="col-sm-4 col-form-label">Contraseña</label>
+									<div class="col-sm-7">
+										<input type="text" class="form-control" id="password" disabled
+											placeholder="Generada aleatoriamente" /> <br>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="tab-pane fade" id="permissions" role="tabpanel"
+								aria-labelledby="profile-tab">
+								<div class="form-group row">
+									&nbsp;&nbsp;&nbsp;<label for="" class="col-form-label">Seleccione
+										los sistemas que el usuario va a poder acceder:</label>
+									<div class="col  align-self-center">
+										<ul>
+											<li th:each="systemAplication : ${systemsApp}"><input
+												type="checkbox" th:id="${systemAplication.keyword}"
+												th:value="${systemAplication.keyword}"
+												th:field="*{permissons}" /> <label
+												th:text="${systemAplication.name + ': ' + systemAplication.description}">
+											</label></li>
+
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div class="tab-pane fade" id="addressHome" role="tabpanel"
+								aria-labelledby="profile-tab">
+
+								<div class="form-group row">
+									<br> <label for="" class="ml-1 col-sm-3 col-form-label">Ciudad:</label>
+									<div class="col-sm-8">
+										<select class="form-select" th:field="*{city}">
+											<option selected disabled value="0">Seleccione una
+												ciudad</option>
+											<option th:each="city: ${citys}" th:value="${city.name}"
+												th:text="${city.name}"></option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="" class="ml-1 col-sm-3 col-form-label">Calle
+										Principal:</label>
+									<div class="col-sm-8">
+										<input type="text" th:field="*{mainStreet}"
+											class="form-control" id="phone" placeholder="022000001" />
+									</div>
+								</div>
+								<div class="form-group row">
+									<label for="" class="ml-1 col-sm-3 col-form-label">Calle
+										Secundaria:</label>
+									<div class="col-sm-8">
+										<input type="text" th:field="*{secondaryStreet}"
+											class="form-control" id="phone" />
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="" class="ml-1 col-sm-3 col-form-label">Barrio:</label>
+									<div class="col-sm-8">
+										<input type="text" th:field="*{neighborhood}"
+											class="form-control" id="phone" />
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="" class="ml-1 col-sm-3 col-form-label">Numeración
+										Casa:</label>
+									<div class="col-sm-8">
+										<input type="text" th:field="*{houseNumbering}"
+											class="form-control" id="phone" />
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+					<div class="modal-footer">
+
+						| <i class="fa fa-check"></i>&nbsp; <input type="submit"
+							class="btn btn-primary" value="Guardar" />
+
+						<button type="button" class="btn btn-danger" data-dismiss="modal">
+							<i class="fa fa-close"></i>&nbsp;Cerrar
+						</button>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</form>
+
+
+
+	<div class="modal fade" id="modal_gen_cred_temp" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<b>Generar una Contraseña Temporal al usuario</b>
+					</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<form th:action="@{/user/temp-credential/generation}" method="post">
+						<div class="container" id="modal-container-temp-cred"></div>
+						<hr />
+						<div class="container">
+							<div class="row no-gutters mb-1">
+								<label for="observationsInput" class="col-sm-4 col-form-label">Observaciones:
+									(Opcional)</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control" id="observationsInput"
+										placeholder="motivos para generar la contraseña..."
+										name="observations" />
+								</div>
+							</div>
+							<div class="row no-gutters mb-1">
+								<label for="dateExpiration" class="col-sm-4 col-form-label">Fecha
+									de Expiración: (Opcional)</label>
+								<div class="col-sm-8">
+									<input type="date" id="dateExpiration" class="form-control"
+										name="expirationDatta">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+
+							<i class="fa fa-check"></i>&nbsp; <input type="submit"
+								class="btn btn-primary" value="Generar" />
+
+							<button type="button" class="btn btn-danger" data-dismiss="modal">
+								<i class="fa fa-close"></i>&nbsp;Cerrar
+							</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal_edit_user" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">
+						<b>Editar la Información del usuario</b>
+					</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/}" method="post">
+						<div class="container" id="modal-container-edit">
+							<div class="row no-gutters"></div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="modal_delete_user" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">
+						<b>¿Está seguro que desea eliminar el usuario?</b>
+					</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="container">
+						<div class="row no-gutters">
+							<div class="col"></div>
+							<div class="col"></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+	<script th:src="@{/js/popper.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+
+	<script src="/js/users.js"></script>
+
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<footer th:replace="layouts/internt-layout.html :: 'footer'">
+	</footer>
+
+</body>
+
+
+</html>

@@ -17,4 +17,18 @@ public class ExceptionHandlerController {
 		return ex.getViewResolver();
 	}
 	
+	@ExceptionHandler(BusinessLogicException.class)
+	public String  bussinessLogicExceptionHandler(BusinessLogicException ex, Model model) {
+		model.addAttribute("errorMessage", ex.getMessage());
+		model.addAttribute("recommendation", ex.getRecommendation());
+		return "/error/500";
+	}
+	
+	@ExceptionHandler(DataCustomException.class)
+	public String dataCustomExceptionHandler(DataCustomException ex, Model model) {
+		model.addAttribute("message", ex.getMessage());
+		model.addAttribute("entity", ex.getEntity() );
+		model.addAttribute("descriptionAccionFail", ex.getDescriptionAccionFail());
+		return "/error/409";
+	}
 }

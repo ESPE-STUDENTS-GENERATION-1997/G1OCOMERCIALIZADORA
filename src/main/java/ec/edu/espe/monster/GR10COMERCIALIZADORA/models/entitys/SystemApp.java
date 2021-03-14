@@ -22,7 +22,7 @@ import lombok.Data;
 @Entity
 @Table(name = "XESIS_SISTEM")
 @Data
-public class System {
+public class SystemApp {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class System {
 	private String description;
 	
 	@NotEmpty(message = "La palabra clave del Sistema es necesario")
-	@Column(nullable = false, length = 50, name = "keyword_sistema")
+	@Column(nullable = false, length = 50, name = "keyword_sistema", unique = true)
 	private String keyword;
 	
 	
@@ -46,17 +46,18 @@ public class System {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_sistema_original", referencedColumnName = "id_sistema")
-	private System originalSystem;
+	private SystemApp originalSystem;
 	
 	@OneToMany(mappedBy = "originalSystem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
-	private Set<System> subSystems;
+	private Set<SystemApp> subSystems;
 	
-	@OneToMany(mappedBy = "system", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<ResourceSystem> resources;
 	
 	@OneToMany(mappedBy = "systemProfile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<ProfileUser> profiles;
+	
+	@OneToMany(mappedBy = "system", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<ResourcesOfSystem> resourcesOfSystem;
 }

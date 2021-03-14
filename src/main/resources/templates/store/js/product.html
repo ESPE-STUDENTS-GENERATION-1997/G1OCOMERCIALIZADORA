@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script type="text/javascript" th:fragment="product-script">
+	
+	function AbrirModalRegistroProducto()
+	{
+		$("#modal_registro_producto").modal('show');
+	}
+	
+	function cerrarModal()
+	{
+		$("#modal_registro_producto").modal('hide');
+	}
+
+	$('table .editar').on('click',function(){
+		$("#modal_modificar_producto").modal('show');
+		var code_product = $(this).parent().find('#code_product_edit').val();
+		$.ajax({
+			type: 'GET',
+			url: '/getOneProduct/'+code_product,
+			success: function(product)
+			{
+				$('#modal_modificar_producto #code_product').val(product.code_product);
+				$('#modal_modificar_producto #name_product').val(product.name_product);
+				$('#modal_modificar_producto #description_product').val(product.description_product);
+				$('#modal_modificar_producto #price_product').val(product.price_product);
+				$('#modal_modificar_producto #stock_product').val(product.stock_product);
+				$('#modal_modificar_producto #created_product').val(product.created_product);
+				$('#modal_modificar_producto #img_product').val(product.img_product);
+				$('#modal_modificar_producto #img_product_mostrar').attr('src', '/uploads/'+product.img_product);
+			}
+		})
+	});
+    //var data = tableProducts.row($(this).parents('tr')).data();
+    //$("#modal_modificar_producto").modal({backdrop:'static',keyboard:false}) 
+    //$("#modal_modificar_producto").modal('show');
+    //$("#name_product").val(data.name_product);
+	
+
+</script>
+</body>
+</html>

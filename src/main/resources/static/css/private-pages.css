@@ -1,0 +1,100 @@
+@charset "UTF-8";
+/*!
+* Start Bootstrap - Agency v6.0.3 (https://startbootstrap.com/theme/agency)
+* Copyright 2013-2020 Start Bootstrap
+* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-agency/blob/master/LICENSE)
+*/
+/*!
+ * Bootstrap v4.5.3 (https://getbootstrap.com/)
+ * Copyright 2011-2020 The Bootstrap Authors
+ * Copyright 2011-2020 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #ffffff;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 35px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.title-sidebar{
+	background-color: transparent;
+    color: white;
+    padding-top: 10px;
+}
+
+.container-nav{
+	margin-left: 2%;
+	width: 100%;
+}
+
+.openbtn:hover {
+  background-color: gray;
+}
+
+#main {
+  transition: margin-left .5s;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+#mainNavInternet{
+	    background-color: black;
+}
+
+.logo-home{
+	max-width: 300px;
+    min-width: 250px;
+    max-height: 300px;
+    min-height: 250px;
+    align-self: center;
+}
+
+
+.card-user-img{
+	min-height: 150px;
+    max-height: 180px;
+    max-width: 180px;
+    min-width: 150px;
+    align-self: center;
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/internt-layout.html :: 'head' "></head>
+<body id="page-top">
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
+	<br>
+	<br>
+	<br>
+	<br>
+	
+	<div class="alert alert-success" th:if="${success!=null}" th:text="${success}"></div>
+	<div class="alert alert-danger" th:if="${danger!=null}" th:text="${error}"></div>
+	<div class="alert alert-warning" th:if="${warning!=null}" th:text="${warning}"></div>
+	<div class="alert alert-info" th:if="${info!=null}" th:text="${info}"></div>
+	
+	<div class="container">
+		<h1 th:text="${titulo}"></h1>
+		<div class="form-group">
+			<div class="container">
+				<button class="btn btn-primary"
+					onclick="AbrirModalRegistroClientes()">
+					<i class="fa fa-plus"></i>&nbsp;Agregar Cliente
+				</button>
+			</div>
+		</div>
+
+		<table class="table" id="tableProducts">
+			<thead class="thead-dark">
+				<tr>
+					<th>Cédula</th>
+					<th>Nombres y Apellidos</th>
+					<th>Email</th>
+					<th>Teléfono</th>
+					<th>Dirección</th>
+					<th>Facturas</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="customer : ${customers}">
+					<td th:text="${customer.document_customer}"></td>
+					<td th:text="${customer.names_customer}+' '+${customer.lastnames_customer}"></td>
+					<td th:text="${customer.email_customer}"></td>
+					<td th:text="${customer.phone_customer}"></td>
+					<td th:text="${customer.address_customer}"></td>
+					<td>
+						<a class="btn btn-success" th:href="@{/fact-cliente/}+${customer.id_customer}">Ver Facturas</a>
+					</td>
+					<td>
+						<button type="button" class="editar btn btn-primary">
+							<i class="far fa-edit"></i>
+						</button>
+						<a class="btn btn-danger" onclick="return confirm('Está seguro de eliminar la información del cliente')">
+							<i class="fas fa-trash"></i>
+						</a>
+						<!-- <input type="hidden" id="code_product_edit" th:value="${product.code_product}"  /> -->
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	
+	<form method="post" th:object="${customer}" th:action="@{/addCustomer}" enctype="multipart/form-data">
+		<div class="modal fade" id="modal_registro_cliente" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title">
+							<b>Registro de Nuevo Cliente</b>
+						</h3>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="col-lg-12">
+							<label for="">Nombres del Cliente</label> <input type="text"
+								class="form-control" th:field="*{names_customer}"
+								placeholder="Ingrese los nombres del cliente" /> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Apellidos del cliente</label> <input type="text"
+								class="form-control" th:field="*{lastnames_customer}"
+								placeholder="Ingrese los apellidos del cliente" /> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Cédula del cliente</label> <input type="text"
+								class="form-control" th:field="*{document_customer}"
+								placeholder="Ingrese la cédula del cliente" /> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Correo electrónico</label> <input type="text"
+								class="form-control" th:field="*{email_customer}"
+								placeholder="Ingrese el correo del cliente" /> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Teléfono cliente</label> <input type="text"
+								class="form-control" th:field="*{phone_customer}"
+								placeholder="Ingrese el teléfono del cliente" /> <br>
+						</div>
+						<div class="col-lg-12">
+							<label for="">Dirección del cliente</label> <input type="text" name="address_customer"
+								class="form-control"
+								placeholder="Ingrese la dirección del cliente" /> <br>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<i class="fa fa-check"></i>&nbsp; <input type="submit"
+							class="btn btn-primary" value="Guardar Cliente" />
+
+						<button type="button" class="btn btn-danger" data-dismiss="modal">
+							<i class="fa fa-close"></i>&nbsp;Cerrar
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Third party plugin JS-->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+		
+		<script src="/js/users.js"></script>
+
+	<!-- <script th:replace="store/js/product :: product-script"></script> -->
+
+</body>
+<footer th:replace="layouts/internt-layout.html :: 'footer' "></footer>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/internt-layout.html :: 'head' "></head>
+<body>
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
+	<main class="container mt-3">
+		<h1 class="mt-4">.</h1>
+		<section class="row pt-1 pb-1">
+			<div class="col-sm-3">
+				<button type="button" class="btn btn-secondary">Agregar Sistema</button>
+			</div>
+		</section>
+
+		<section class="row pt-1">
+			<div class="col">
+				<table class="table">
+					<thead class="table-dark">
+						<tr>
+							<th scope="col">Nombre</th>
+							<th scope="col">Descripción</th>
+							<th scope="col">Estado</th>
+							<th scope="col">Editar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="system: ${systemsApp}">
+							<th th:text="${system.name}"></th>
+							<th th:text="${system.description}"></th>
+							<th th:text="${system.current? 'Activo' : 'Desactivado'}"></th>
+							<td>
+								<button type="button" class="btn btn-primary">
+									<i class="far fa-edit"></i>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</main>
+	
+	
+	
+	
+	<footer th:replace="layouts/internt-layout.html :: 'footer'">
+	</footer>
+</body>
+</html>

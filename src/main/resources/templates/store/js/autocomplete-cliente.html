@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<script type="text/javascript" th:fragment="javascript">
+		$(document).ready(function(){
+		
+			$("#buscar_cliente").autocomplete({
+				source: function(request,response){
+					$.ajax({
+						url:"/cargar-cliente/" + request.term,
+						dataType: "json",
+						data: {
+							term: request.term
+						},
+						success: function(data){
+							response($.map(data, function(item){
+								return{
+									value: item.document_customer,
+									label: item.names_customer + " " +item.lastnames_customer,
+									correo: item.email_customer,
+									telefono: item.phone_customer,
+									address: item.address_customer,
+									code: item.id_customer,
+								};
+						}));
+					},
+				});
+			},
+			select: function(event,ui){
+				$("#buscar_cliente").val(ui.item.label);
+				
+				$("#customer").val(ui.item.code);
+				$("#names_costumer").val(ui.item.label);
+				$("#document_costumer").val(ui.item.value);
+				$("#email_costumer").val(ui.item.correo);
+				$("#phone_costumer").val(ui.item.telefono);
+				$("#address_costumer").val(ui.item.address);
+				
+				return false;
+			}
+		});
+	});
+	</script>
+
+</body>
+</html>

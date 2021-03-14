@@ -28,6 +28,7 @@ import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.StateUser;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.States;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ILoginServices;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IRedirectLogin;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -40,6 +41,9 @@ public class LoginServicesImp implements ILoginServices {
 	
 	@Autowired
 	private IUserAppDAO userDAO;
+	
+	@Autowired
+	private IRedirectLogin redirectLogin;
 
 	@Override
 	public String loginUser(LoginGetRequest request) {
@@ -95,7 +99,6 @@ public class LoginServicesImp implements ILoginServices {
 			throw new AuthenticationCustomException("Nombre de usuario o contraseña incorrecta, por favor vuelve a intentarlo.",
 					"/onboarding/login", AuthenticationExceptionCodes.USER_BAD_CREDENTIAL);
 		}
-		
 		UserApp user = userDAO.findByNickname(loginRequest.getUsername()).orElseThrow(() -> {
 			log.error("[ERROR USER NOT FOUND]");
 			return new UsernameNotFoundException("Credenciales invalidas");
@@ -103,7 +106,7 @@ public class LoginServicesImp implements ILoginServices {
 		
 		this.validationStateOfUser(user.getCurrentState());
 		
-		return "/store/home";
+		return redirectLogin.redirectByUserType(user.getType());
 	}
 	
 	private void validationStateOfUser(StateUser stateUser) {
@@ -114,6 +117,7 @@ public class LoginServicesImp implements ILoginServices {
 		} else if (stateUser.getState() != null) {
 			States state = stateUser.getState();
 
+			log.info("[STATE USER AUTH] " + state.getKeyword() );
 			switch (state.getKeyword()) {
 			case "E001":
 				throw new AuthenticationCustomException("Al ser la primera vez que ingresa debe cambiar su contraseña",

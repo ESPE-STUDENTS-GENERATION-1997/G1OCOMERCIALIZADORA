@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="Dany Lasso" />
+<title th:text="'Los Chinitos'"></title>
+<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js"
+	crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css" />
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"
+	rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+	crossorigin="anonymous">
+<link th:href="@{/css/styles.css}" rel="stylesheet" />
+<link th:href="@{/css/private-pages.css}" rel="stylesheet" />
+</head>
+<body>
+
+	<header th:fragment="header">
+		<nav class="navbar navbar-expand-sm navbar-dark fixed-top"
+			id="mainNavInternet">
+			<div class=" container-nav">
+
+				<div id="mySidebar" class="sidebar accordion">
+					<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+					<div th:each="category : ${menu}">
+						<div th:if="${category.isMenuCategory}" class="accordion-item">
+							<h6 class="accordion-header">
+								<button class="accordion-button" type="button"
+									data-bs-toggle="collapse"
+									th:data-bs-target="'#' + ${category.keyword} "
+									aria-expanded="false" aria-controls="collapseOne"
+									th:text="${category.name}"
+									style="background-color: #e7f1ff"
+									></button>
+							</h6>
+							<div th:id="${category.keyword}"
+								class="accordion-collapse collapse "
+								aria-labelledby="headingOne" data-bs-parent="#mySidebar">
+								<div class="accordion-body"
+									th:each="item :  ${category.subItems}">
+									<a th:href="@{${item.url}}" th:text="${item.name}"></a>
+								</div>
+							</div>
+						</div>
+						<hr class="dropdown-divider">
+					</div>
+
+				</div>
+
+
+				<div id="main" class="row justify-content-between ">
+					<div class="col-sm-1" th:if="${menu != null}">
+						<button class="openbtn" onclick="openNav()">☰</button>
+					</div>
+					<div class="col-sm-6">
+						<h4 class="title-sidebar"
+							th:text="${(titlePage != null)? titlePage : 'Comercializador Monster - Internos' }"></h4>
+					</div>
+					<div class="col-sm-3" sec:authorize="isAuthenticated()">
+						<ul class="navbar-nav text-uppercase ml-auto">
+							<li class="nav-item"><a class="nav-link js-scroll-trigger"
+								href="#team"> <span class="btn btn-light btn-sm"
+									sec:authentication="name"></span></a></li>
+
+							<li class="nav-item">
+								<form th:action="@{/logout}" class="nav-link js-scroll-trigger"
+									method="post">
+									<button class="btn btn-danger btn-sm" type="submit">CERRAR
+										SESIÓN</button>
+								</form>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+
+	<!-- Footer-->
+	<footer class="footer py-4" th:fragment="footer">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-4 text-lg-left">Copyright ©
+					Comercializadora Grupo 10 - 2021</div>
+				<div class="col-lg-4 my-3 my-lg-0">
+					<a class="btn btn-dark btn-social mx-2" href="#!"><i
+						class="fab fa-twitter"></i></a> <a
+						class="btn btn-dark btn-social mx-2" href="#!"><i
+						class="fab fa-facebook-f"></i></a> <a
+						class="btn btn-dark btn-social mx-2" href="#!"><i
+						class="fab fa-linkedin-in"></i></a>
+				</div>
+			</div>
+		</div>
+
+
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- Third party plugin JS-->
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+
+		<script src="/js/navbar.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+			integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+			integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
+			crossorigin="anonymous"></script>
+			
+			
+			<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+			<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+			<script th:src="@{/js/popper.min.js}"></script>
+			<script th:src="@{/js/bootstrap.min.js}"></script>
+			<script th:src="@{/js/jquery-ui.min.js}"></script>
+			<script th:replace="store/js/autocomplete-product :: javascript"></script>
+			<script th:replace="store/js/autocomplete-cliente :: javascript"></script>
+		
+	</footer>
+</body>
+</html>
