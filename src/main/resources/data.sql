@@ -66,7 +66,7 @@ vxvaca - pass: 12345
 INSERT INTO xeusa_usuario (fec_creacion_usuario,fec_modificacion_usuario,fec_nacimiento_usuario,discapacidad_usuario,correo_usuario,apellidos_usuario,nombres_usuario,username_usuario,num_documento_usuario,password_usuario,telefono_usuario,tipo_usuario,fk_cod_domicilio) VALUES
 	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'dflasso1@espe.edu.ec','Lasso Ayala','Dany Fernando','dflasso','1726039967','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0999258192','ut001',1),
 	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'socrisanto@espe.edu.ec','Crisanto','Stalin','socrisanto','1723401715','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0995077348','ut001',2),
-	 ('2021-03-07 00:48:25.284508000',NULL,'2021-03-07 00:48:25.284486000','N/A','dannyflasso99@gmail.com','aaaaa','prueba','prueba','1726039967','{bcrypt}$2a$10$n8vztPQRbBJ3DD04nDVhv.KHk0Iqk5W0ULPBEl1rYK7TLOSQQJJr.','0999258192','ut001',4),
+	 ('2021-03-07 00:48:25.284508000',NULL,'2021-03-07 00:48:25.284486000','N/A','dannyflasso99@gmail.com','aaaaa','prueba','prueba','1726039967','{bcrypt}$2a$10$n8vztPQRbBJ3DD04nDVhv.KHk0Iqk5W0ULPBEl1rYK7TLOSQQJJr.','0999258192','ut001',3),
 	 ('2021-03-08 21:53:39.243995000',NULL,'2021-03-08 21:53:39.243995000','no','vxvaca1@espe.edu.ec','Vaca','Xavier','vxvaca','1725982985','{bcrypt}$2a$10$QNAsnUchU46BwLlaAuWsVefOHlkA2iU6i1FtOmo3YX2WLKLwKUnzm','0998868008','ut001',4);
 
 
