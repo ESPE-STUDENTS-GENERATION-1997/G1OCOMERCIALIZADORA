@@ -12,7 +12,7 @@ public class UserTypeEditor extends PropertyEditorSupport {
 
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
-		if (text == null || text.isBlank() || text.isEmpty()) {
+		if (text == null ) {
 			this.setValue(null);
 		} else {
 
