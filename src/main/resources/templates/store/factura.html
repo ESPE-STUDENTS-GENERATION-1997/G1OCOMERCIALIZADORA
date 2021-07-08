@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="layouts/internt-layout.html :: 'head' "></head>
-<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+<head th:replace="layouts/internt-layout.html :: 'head' ">
+
 </head>
 <body id="page-top">
 	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
@@ -11,10 +11,65 @@
 	<br>
 	<br>
 	<div class="container">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h5>Comercializadora Monster S.A.</h5>
+			</div>
+			<div class="card-body" id="empresaInfo">
+				<h4 class="card-title"></h4>
+				<input type="hidden" name="customer" id="customer" />
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="names_costumer">RUC</label> <input type="text"
+							class="form-control" value="1768007390001" disabled />
+					</div>
+					<div class="form-group col-md-6">
+						<label for="document_costumer">Dirección</label> <input
+							type="text" class="form-control"
+							value="Av. 12 de Octubre N26-97 y Abraham	Lincoln" disabled>
+					</div>
+				</div>
+			</div>
+			<div class="card bg-light">
+				<div class="card-header">
+					<h5>Vendedor</h5>
+				</div>
+				<div class="card-body" id="empresaInfo">
+					<h4 class="card-title"></h4>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="address_costumer">Nombres:</label> <input type="text"
+								class="form-control" placeholder="Dirección domiciliaria"
+								th:value="${seller.names + ' ' + seller.lastnames}" disabled>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="address_costumer">Correo:</label> <input type="text"
+								class="form-control" placeholder="Dirección domiciliaria"
+								th:value="${seller.email}" disabled>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="address_costumer">Identificación:</label> <input
+								type="text" class="form-control"
+								placeholder="Dirección domiciliaria"
+								th:value="${seller.numDocument}" disabled>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="address_costumer">Teléfono:</label> <input
+								type="text" class="form-control"
+								placeholder="Dirección domiciliaria" th:value="${seller.phone}"
+								disabled>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br />
+	<div class="container">
 		<h4>Buscar cliente</h4>
 		<div class="form-group row">
-			<label for="buscar_cliente" class="col-sm-4 col-form-label"
-				th:text="'Buscar cliente'"></label>
+			<label for="buscar_cliente" class="col-sm-5 col-form-label"
+				th:text="'Puede buscarlo por: nombres, correo o identificación. '"></label>
 			<div class="col-sm-6">
 				<input type="text" name="buscar_cliente" id="buscar_cliente"
 					class="form-control" />
@@ -30,26 +85,27 @@
 				</div>
 				<div class="card-body" id="datosClienteFactura">
 					<h4 class="card-title"></h4>
-					<input type="hidden" name="customer" id="customer" />
+					<input type="hidden" name="customer" id="customerId" /> <input
+						class="form-control" name="descripcion_factura" type="hidden"
+						value="001-001-000000011" disabled>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="names_costumer">Cliente</label> <input type="text"
 								class="form-control" name="names_costumer" id="names_costumer"
-								placeholder="Cliente" disabled="true" />
+								placeholder="Cliente" disabled />
 						</div>
 						<div class="form-group col-md-6">
 							<label for="document_costumer">Cédula de identidad</label> <input
 								type="text" class="form-control" name="document_costumer"
 								id="document_costumer" placeholder="Cédula de identidad"
-								disabled="true">
+								disabled>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="email_costumer">Correo Electrónico</label> <input
 								type="email" class="form-control" name="email_costumer"
-								id="email_costumer" placeholder="Correo Electrónico"
-								disabled="true">
+								id="email_costumer" placeholder="Correo Electrónico" disabled>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="phone_costumer">Teléfono</label> <input type="text"
@@ -64,30 +120,24 @@
 								id="address_costumer" placeholder="Dirección domiciliaria"
 								disabled="true">
 						</div>
-					</div><br>
-					<h5>Descripción de la Factura</h5>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="address_costumer">Ingrese una descripción de la factura</label> <input
-								type="text" class="form-control" name="descripcion_factura"
-								id="descripcion_factura" placeholder="Ingrese una descripción">
-						</div>
 					</div>
+
 				</div>
 				<div class="card-header">
 					<h5>Items de factura</h5>
 				</div>
 				<div class="card-body">
 					<div class="form-group row">
-						<label for="buscar_producto" class="col-sm-4 col-form-label"
-							th:text="'Buscar Producto'"></label>
-						<div class="col-sm-6">
-							<input type="text" name="buscar_producto" id="buscar_producto"
-								class="form-control" />
+						<div class="container">
+							<button class="btn btn-primary"
+								onclick="AbrirModalBuscarProducto(event)">
+								<i class="fa fa-plus"></i>&nbsp;Buscar Producto
+							</button>
 						</div>
-						<table th:replace="store/plantilla-items :: itemsFactura"></table><br><br><br>
-						
-						<table id="cargarItemProductos" class="table table-sm table-striped table-hover">
+						<table th:replace="store/plantilla-items :: itemsFactura"></table>
+						<br> <br> <br>
+						<table id="cargarItemProductos"
+							class="table table-sm table-striped table-hover">
 							<thead>
 								<tr>
 									<th>Nombre</th>
@@ -99,27 +149,193 @@
 							</thead>
 							<tbody></tbody>
 						</table>
-						<div class="container" style="margin-left:660px">
-						<h5>Total&nbsp;<i class="fas fa-equals"></i>&nbsp;&nbsp;<i class="fas fa-dollar-sign"></i>&nbsp; <span class="badge badge-secondary" id="gran_total">0</span></h5>
+						<div class="container">
+							<div class="container">
+								<div class="row">
+									<div class="col-lg-6">
+										<div class="row">
+											<h5>Detalles del Pago</h5>
+										</div>
+										<div class="row">
+											<div class="col-lg-4">Forma de Pago</div>
+											<div class="col-lg-7">
+												<select class="form-select" id="select_form_paid" name="type_paid">
+													<option selected disabled>Seleccione una forma de
+														pago</option>
+													<option value="1">Efectivo</option>
+													<option value="2">Crédito</option>
+												</select>
+											</div>
+										</div>
+										<div class="row mt-3" id="divDetailsPaid"></div>
+									</div>
+									<div class="col-lg-6">
+										<div class="row">
+											<div class="col-lg-6">Subtotal:</div>
+											<div class="col-lg-6">
+												<input class="form-control" disabled id="invoice_subtotal">
+											</div>
+											<div class="col-lg-6">Descuento:</div>
+											<div class="col-lg-6">
+												<input class="form-control" disabled id="invoice_discount">
+											</div>
+
+											<div class="col-lg-6">Total</div>
+											<div class="col-lg-6">
+												<input class="form-control" disabled id="invoice_total">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+					<div class="row justify-content-md-center mb-2">
+						<div class="col-lg-6" id="request_credit"></div>
+						<div class="col-lg-6">
+							<button type="submit" id="submit_invoince_button"
+								class="btn btn-primary">Registrar Factura</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<input type="submit" value="Añadir Factura" class="btn btn-secondary"/>
 		</div>
-		
 	</form>
 	<br>
 	<br>
 	<br>
 	<br>
 	<br>
+	<div class="modal fade" id="modal_buscar_producto" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<b>Buscar un Nuevo Producto</b>
+					</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="form-group row">
+							<label for="buscar_producto" class="col-sm-5 col-form-label"
+								th:text="'Nombre del Producto:'"></label>
+							<div class="col-sm-6">
+								<input type="text" name="buscar_producto" id="buscar_producto"
+									class="form-control" />
+							</div>
+						</div>
+					</div>
+					<hr />
+					<div class="row">
+						<div class="col-sm-7">
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Código:</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control"
+										id="buscar_prod_mondal_code" disabled />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Descripción:</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control"
+										id="buscar_prod_mondal_desc" disabled />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Precio:</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control"
+										id="buscar_prod_mondal_price" disabled />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Stock</label>
+								<div class="col-sm-8">
+									<input type="text" class="form-control"
+										id="buscar_prod_mondal_stock" disabled />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-sm-3 col-form-label">Cantidad</label>
+								<div class="col-sm-8">
+									<input type="number" class="form-control"
+										id="buscar_prod_mondal_amount" />
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<img id="buscar_prod_mondal_img" alt="img-produtucto"
+								th:src="@{/img/default-placeholder.png}"
+								style="min-width: 100px; max-width: 300px; min-height: 100px; max-height: 300px;">
+						</div>
+					</div>
+					<hr />
+					<div class="row justify-content-md-center">
+						<div class="col-sm-4">
+							<button type="button" class="btn btn-primary"
+								onclick="addProduct()">Agregar</button>
+						</div>
+						<div class="col-sm-4">
+							<button type="button" class="btn btn-danger"
+								onclick="cerrarModalBuscarProducto(event)">Cancelar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal_solicitar_credito" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<b>Resumen del Crédito solicitado</b>
+					</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="row" id="result_request_credit"></div>
+					<div class="row">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col"># Cuota</th>
+									<th scope="col">Valor Cuota</th>
+									<th scope="col">Interés Pagado</th>
+									<th scope="col">Capital Pagado</th>
+									<th scope="col">Saldo</th>
+								</tr>
+							</thead>
+							<tbody id="result_table_credit">
+							</tbody>
+						</table>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<button type="button" class="btn btn-info" onclick="handleCloseSuccessRequestCredit()" id="btn_success_request_credit">Aceptar</button>
+						</div>
+						<div class="col-sm-6">
+							<button type="button" class="btn btn-danger" onclick="handleCloseRequestCredit()" >Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 </body>
-<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
 <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/jquery-ui.min.js}"></script>
+<script th:replace="store/js/product :: product-script"></script>
 <script th:replace="store/js/autocomplete-product :: javascript"></script>
 <script th:replace="store/js/autocomplete-cliente :: javascript"></script>
 <footer th:replace="layouts/internt-layout.html :: 'footer' "></footer>

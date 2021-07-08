@@ -6,4 +6,5 @@ import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.Factura;
 
 public interface IFacturaDAO extends JpaRepository<Factura, Long>{
 	
+	
 }

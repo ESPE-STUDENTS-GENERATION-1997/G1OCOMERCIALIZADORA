@@ -8,18 +8,21 @@
 	<br>
 	<br>
 	<br>
-	
-	<div class="alert alert-success" th:if="${success!=null}" th:text="${success}"></div>
-	<div class="alert alert-danger" th:if="${danger!=null}" th:text="${error}"></div>
-	<div class="alert alert-warning" th:if="${warning!=null}" th:text="${warning}"></div>
+
+	<div class="alert alert-success" th:if="${success!=null}"
+		th:text="${success}"></div>
+	<div class="alert alert-danger" th:if="${danger!=null}"
+		th:text="${error}"></div>
+	<div class="alert alert-warning" th:if="${warning!=null}"
+		th:text="${warning}"></div>
 	<div class="alert alert-info" th:if="${info!=null}" th:text="${info}"></div>
-	
+
 	<div class="container">
 		<h1 th:text="${titulo}"></h1>
 		<div class="form-group">
 			<div class="container">
 				<button class="btn btn-primary"
-					onclick="AbrirModalRegistroProducto()">
+					onclick="AbrirModalRegistroProducto(event)">
 					<i class="fa fa-plus"></i>&nbsp;Agregar Producto
 				</button>
 			</div>
@@ -46,18 +49,21 @@
 					<td th:text="${product.price_product}"></td>
 					<td th:text="${product.stock_product}"></td>
 					<td th:text="${product.created_product}"></td>
-					<td style="width:100px"><img class="img-responsive float-right" style="width: 120%;" th:src="@{'/uploads/'+${product.img_product}}" th:alt="${product.img_product}"> </td>
+					<td style="width: 100px"><img
+						class="img-responsive float-right" style="width: 120%;"
+						th:src="@{'/uploads/'+${product.img_product}}"
+						th:alt="${product.img_product}"></td>
 					<td>
 						<button type="button" class="editar btn btn-primary">
 							<i class="far fa-edit"></i>
-						</button>
-						<a class="btn btn-danger" th:href="@{/delete/}+${product.code_product}" onclick="return confirm('Está seguro de eliminar la información del producto')">
+						</button> <a class="btn btn-danger"
+						th:href="@{/delete/}+${product.code_product}"
+						onclick="return confirm('Está seguro de eliminar la información del producto')">
 							<i class="fas fa-trash"></i>
-						</a>
-						<!-- <button type="button" class="btn btn-danger">
+					</a> <!-- <button type="button" class="btn btn-danger">
 							<i class="fas fa-trash"></i>
-						</button>-->
-						<input type="hidden" id="code_product_edit" th:value="${product.code_product}"  />
+						</button>--> <input type="hidden" id="code_product_edit"
+						th:value="${product.code_product}" />
 					</td>
 				</tr>
 			</tbody>
@@ -66,9 +72,10 @@
 	</div>
 
 	<!-- AÑADIR PRODUCTO -->
-	<form method="post" th:object="${product}" th:action="@{/addProduct}" enctype="multipart/form-data">
+	<form method="post" th:object="${product}" th:action="@{/addProduct}"
+		enctype="multipart/form-data">
 		<div class="modal fade" id="modal_registro_producto" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h3 class="modal-title">
@@ -76,38 +83,117 @@
 						</h3>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
+
+
 					<div class="modal-body">
-						<div class="col-lg-12">
-							<label for="">Nombre del Producto</label> <input type="text"
-								class="form-control" th:field="*{name_product}"
-								placeholder="Ingrese el nombre del producto" /> <br>
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="col-lg-12">
+									<label for="">Nombre del Producto</label> <input type="text"
+										class="form-control" th:field="*{name_product}"
+										placeholder="Ingrese el nombre del producto" /> <br>
+								</div>
+								<div class="col-lg-12">
+									<label for="">Descripción del Producto</label> <input
+										type="text" class="form-control"
+										th:field="*{description_product}"
+										placeholder="Ingrese la descripción del producto" /> <br>
+								</div>
+
+								<div class="col-lg-12">
+									<label for="">Fecha de ingreso del Producto</label> <input
+										type="date" class="form-control" th:field="*{created_product}"
+										placeholder="Selecciones una fecha" /> <br>
+								</div>
+
+							</div>
+
+
+							<div class="col-lg-6">
+								<div class="col-lg-12">
+									<label for="">Imagen del producto</label> <input type="file"
+										name="file" class="form-control"
+										placeholder="Selecciones una imagen" /> <br>
+								</div>
+							</div>
 						</div>
-						<div class="col-lg-12">
-							<label for="">Descripción del Producto</label> <input type="text"
-								class="form-control" th:field="*{description_product}"
-								placeholder="Ingrese la descripción del producto" /> <br>
-						</div>
-						<div class="col-lg-12">
-							<label for="">Precio del Producto</label> <input type="text"
-								class="form-control" th:field="*{price_product}"
-								placeholder="Ingrese el precio del producto" /> <br>
-						</div>
-						<div class="col-lg-12">
-							<label for="">Stock del Producto</label> <input type="number"
-								class="form-control" th:field="*{stock_product}"
-								placeholder="Ingrese el stock del producto" /> <br>
-						</div>
-						<div class="col-lg-12">
-							<label for="">Fecha de ingreso del Producto</label> <input type="date"
-								class="form-control" th:field="*{created_product}"
-								placeholder="Selecciones una fecha" /> <br>
-						</div>
-						<div class="col-lg-12">
-							<label for="">Imagen del producto</label> <input type="file" name="file"
-								class="form-control"
-								placeholder="Selecciones una imagen" /> <br>
+						<hr />
+						<div class="row">
+							<ul class="nav nav-tabs  justify-content-center" id="myTab"
+								role="tablist">
+								<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="home-tab"
+										data-bs-toggle="tab" data-bs-target="#home" type="button"
+										role="tab" aria-controls="home" aria-selected="true">Inventario</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+										data-bs-target="#profile" type="button" role="tab"
+										aria-controls="profile" aria-selected="false">Marca y
+										Categoria</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+										data-bs-target="#contact" type="button" role="tab"
+										aria-controls="contact" aria-selected="false">Proveedor</button>
+								</li>
+							</ul>
+							<div class="tab-content" id="myTabContent">
+								<div class="tab-pane fade show active" id="home" role="tabpanel"
+									aria-labelledby="home-tab">
+									<div class="col-lg-12">
+										<label for="">Precio del Producto</label> <input type="text"
+											class="form-control" th:field="*{price_product}"
+											placeholder="Ingrese el precio del producto" /> <br>
+									</div>
+									<div class="col-lg-12">
+										<label for="">Stock del Producto</label> <input type="number"
+											class="form-control" th:field="*{stock_product}"
+											placeholder="Ingrese el stock del producto" /> <br>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="profile" role="tabpanel"
+									aria-labelledby="profile-tab">
+									<div class="col-lg-12">
+										<label for="">Marca</label> <select class="form-select"
+											aria-label="Default select example">
+											<option selected disabled>Seleccione una marca</option>
+											<option value="1">Indurama</option>
+											<option value="2">Lg</option>
+											<option value="3">Sony</option>
+											<option value="4">Samsung</option>
+										</select> <br>
+									</div>
+									<div class="col-lg-12">
+										<label for="">Categoria</label> <select class="form-select"
+											aria-label="Default select example">
+											<option selected disabled>Seleccione una categoria</option>
+											<option value="1">Línea Blanca</option>
+											<option value="2">Línea Gris</option>
+											<option value="3">Línea Nega</option>
+										</select> <br>
+									</div>
+
+								</div>
+								<div class="tab-pane fade" id="contact" role="tabpanel"
+									aria-labelledby="contact-tab">
+									<div class="col-lg-12">
+										<label for="">Proveedor</label> <select class="form-select"
+											aria-label="Default select example">
+											<option selected disabled>Seleccione un Proveedor</option>
+											<option value="1">Carlos Calle (email:
+												ccalle@eljuri.com) - Empresa: Juan Eljuri</option>
+											<option value="2">Mario García (email:
+												mgarcia@artefacta.com) - Empresa: Artefacta</option>
+											<option value="3">José Almeida (email:
+												jalmeida@marcinex) - Empresa: Marcinex</option>
+										</select> <br>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
+
 					<div class="modal-footer">
 						<i class="fa fa-check"></i>&nbsp; <input type="submit"
 							class="btn btn-primary" value="Guardar Producto" />
@@ -120,11 +206,12 @@
 			</div>
 		</div>
 	</form>
-	
+
 	<!-- EDITAR PRODUCTO -->
-	<form method="post" th:object="${product}" th:action="@{/editProduct}" enctype="multipart/form-data">
+	<form method="post" th:object="${product}" th:action="@{/editProduct}"
+		enctype="multipart/form-data">
 		<div class="modal fade" id="modal_modificar_producto" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h3 class="modal-title">
@@ -132,46 +219,137 @@
 						</h3>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
-					<input type="hidden" id="code_product" name="code_product"/>
+					<input type="hidden" id="code_product" name="code_product" />
 					<div class="modal-body">
-						<div class="col-lg-12">
-							<label for="">Nombre del Producto</label> <input type="text"
-								class="form-control" th:field="*{name_product}"
-								placeholder="Ingrese el nombre del producto" id="name_product" name="name_product"/> <br>
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="col-lg-12">
+									<label for="">Nombre del Producto</label> <input type="text"
+										class="form-control" th:field="*{name_product}"
+										placeholder="Ingrese el nombre del producto" id="name_product"
+										name="name_product" /> <br>
+								</div>
+								<div class="col-lg-12">
+									<label for="">Descripción del Producto</label> <input
+										type="text" class="form-control"
+										th:field="*{description_product}"
+										placeholder="Ingrese la descripción del producto"
+										id="description_product" name="description_product" /> <br>
+								</div>
+								<div class="col-lg-12">
+									<label for="">Precio del Producto</label> <input type="text"
+										class="form-control" th:field="*{price_product}"
+										placeholder="Ingrese el precio del producto"
+										id="price_product" name="price_product" /> <br>
+								</div>
+								<div class="col-lg-12">
+									<label for="">Stock del Producto</label> <input type="number"
+										class="form-control" th:field="*{stock_product}"
+										placeholder="Ingrese el stock del producto" id="stock_product"
+										name="stock_product" /> <br>
+								</div>
+								<div class="col-lg-12">
+									<label for="">Fecha de ingreso del Producto</label> <input
+										type="date" class="form-control" th:field="*{created_product}"
+										placeholder="Selecciones una fecha" id="created_product"
+										name="created_product" /> <br>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="col-lg-12">
+									<label for="">Imagen del producto</label> <input type="hidden"
+										class="form-control" id="img_product" name="img_product" />
+								</div>
+								<div style="width: 110px; margin-left: 20px">
+									<img id="img_product_mostrar" alt="" src=""
+										style="width: 130%;"> <input type="file"
+										id="img_product_edit" name="img_product_edit" />
+								</div>
+							</div>
+
+
 						</div>
-						<div class="col-lg-12">
-							<label for="">Descripción del Producto</label> <input type="text"
-								class="form-control" th:field="*{description_product}"
-								placeholder="Ingrese la descripción del producto" id="description_product" name="description_product" /> <br>
-						</div>
-						<div class="col-lg-12">
-							<label for="">Precio del Producto</label> <input type="text"
-								class="form-control" th:field="*{price_product}"
-								placeholder="Ingrese el precio del producto" id="price_product" name="price_product"/> <br>
-						</div>
-						<div class="col-lg-12">
-							<label for="">Stock del Producto</label> <input type="number"
-								class="form-control" th:field="*{stock_product}"
-								placeholder="Ingrese el stock del producto" id="stock_product" name="stock_product"/> <br>
-						</div>
-						<div class="col-lg-12">
-							<label for="">Fecha de ingreso del Producto</label> <input type="date"
-								class="form-control" th:field="*{created_product}"
-								placeholder="Selecciones una fecha" id="created_product" name="created_product"/> <br>
-						</div>
-						<div class="col-lg-12">
-							<label for="">Imagen del producto</label> 
-							<input type="hidden" class="form-control" id="img_product" name="img_product"/>
-						</div>
-						<div style="width:110px; margin-left:20px">
-							<img id="img_product_mostrar" alt="" src="" style="width: 130%;">
-							<input type="file" id="img_product_edit" name="img_product_edit"/>
+						<div class="row">
+							<ul class="nav nav-tabs  justify-content-center"
+								id="myTabEditNav" role="tablist">
+								<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="home-tab"
+										data-bs-toggle="tab" data-bs-target="#inventario"
+										type="button" role="tab" aria-controls="home"
+										aria-selected="true">Inventario</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+										data-bs-target="#tren" type="button" role="tab"
+										aria-controls="profile" aria-selected="false">Marca y
+										Categoria</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="contact-tab" data-bs-toggle="tab"
+										data-bs-target="#provaider" type="button" role="tab"
+										aria-controls="contact" aria-selected="false">Proveedor</button>
+								</li>
+							</ul>
+							<div class="tab-content" id="myTabEdit">
+								<div class="tab-pane fade show active" id="inventario"
+									role="tabpanel" aria-labelledby="home-tab">
+									<div class="col-lg-12">
+										<label for="">Precio del Producto</label> <input type="text"
+											class="form-control" th:field="*{price_product}"
+											placeholder="Ingrese el precio del producto" /> <br>
+									</div>
+									<div class="col-lg-12">
+										<label for="">Stock del Producto</label> <input type="number"
+											class="form-control" th:field="*{stock_product}"
+											placeholder="Ingrese el stock del producto" /> <br>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="tren" role="tabpanel"
+									aria-labelledby="profile-tab">
+									<div class="col-lg-12">
+										<label for="">Marca</label> <select class="form-select"
+											aria-label="Default select example">
+											<option selected disabled>Seleccione una marca</option>
+											<option value="1">Indurama</option>
+											<option value="2">Lg</option>
+											<option value="3">Sony</option>
+											<option value="4">Samsung</option>
+										</select> <br>
+									</div>
+									<div class="col-lg-12">
+										<label for="">Categoria</label> <select class="form-select"
+											aria-label="Default select example">
+											<option selected disabled>Seleccione una categoria</option>
+											<option value="1">Línea Blanca</option>
+											<option value="2">Línea Gris</option>
+											<option value="3">Línea Nega</option>
+										</select> <br>
+									</div>
+
+								</div>
+								<div class="tab-pane fade" id="provaider" role="tabpanel"
+									aria-labelledby="contact-tab">
+									<div class="col-lg-12">
+										<label for="">Proveedor</label> <select class="form-select"
+											aria-label="Default select example">
+											<option selected disabled>Seleccione un Proveedor</option>
+											<option value="1">Carlos Calle (email:
+												ccalle@eljuri.com) - Empresa: Juan Eljuri</option>
+											<option value="2">Mario García (email:
+												mgarcia@artefacta.com) - Empresa: Artefacta</option>
+											<option value="3">José Almeida (email:
+												jalmeida@marcinex) - Empresa: Marcinex</option>
+										</select> <br>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<i class="fa fa-check"></i>&nbsp; <input type="submit"
 							class="btn btn-primary" value="Modificar Producto" />
-						<button type="button" class="btn btn-danger" onclick="cerrarModal();" data-dismiss="modal">
+						<button type="button" class="btn btn-danger"
+							onclick="cerrarModal();" data-dismiss="modal">
 							<i class="fa fa-close"></i>&nbsp;Cerrar
 						</button>
 					</div>

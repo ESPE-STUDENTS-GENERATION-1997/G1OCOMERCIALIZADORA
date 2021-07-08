@@ -27,12 +27,16 @@ import lombok.Data;
 @Table(name="FEFAC_FACTUR")
 @Data
 public class Factura implements Serializable {
+	
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id_factura;
 	private String descripcion_factura;
 	private String observacion_factura;
+	private String type_paid;
+	private Integer numero_cuotas;
+	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyy-MM-dd")
 	private Date emision_factura;

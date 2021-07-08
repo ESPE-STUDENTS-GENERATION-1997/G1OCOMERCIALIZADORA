@@ -1,6 +1,7 @@
 package ec.edu.espe.monster.GR10COMERCIALIZADORA.controllers;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.Parameter;
@@ -15,15 +16,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IUserAppDAO;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.TableAmortizationResponse;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.Customer;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.Factura;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.ItemFactura;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.Product;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ICustomerService;
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IGenerateTableAmortization;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IHandleInternalViews;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IProductService;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class FacturacionController {
 	
 	@Autowired
@@ -35,10 +42,17 @@ public class FacturacionController {
 	@Autowired
 	private IHandleInternalViews handlerInternalViews;
 	
+	@Autowired
+	private IUserAppDAO userDAO;
+	
+	@Autowired
+	private IGenerateTableAmortization iTableAmortization;
+	
 	@GetMapping("/store/factura")
 	public String facturacion(Model model,Principal principal)
 	{
 		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
+		model.addAttribute("seller", userDAO.findByNickname(principal.getName()).orElse(new UserApp()) );
 		return "store/factura";
 	}
 	
@@ -60,6 +74,7 @@ public class FacturacionController {
 						  @RequestParam (name="cantidad[]", required=false) Integer[] cantidad,
 						  RedirectAttributes flash)
 	{
+		
 		for(int i = 0; i < itemId.length; i++)
 		{
 			Product producto = customerService.findProductById(itemId[i]);
@@ -68,9 +83,12 @@ public class FacturacionController {
 			linea.setProduct(producto);
 			factura.addItemFactura(linea);
 		}
+		
+		
 		customerService.saveFactura(factura);
 		flash.addFlashAttribute("success", "Factura creada con éxito");
-		return "redirect:/fact-cliente/"+factura.getCustomer().getId_customer();
+		
+		return "redirect:/fact-cliente/"+ factura.getCustomer().getId_customer();
 	}
 	
 	@ModelAttribute(name = "titlePage")
@@ -79,11 +97,31 @@ public class FacturacionController {
 	}
 	
 	@GetMapping("/factura/{id_factura}")
-	public String getFactura(@PathVariable(value="id_factura") Long id_factura,Model model,RedirectAttributes flash)
+	public String getFactura(@PathVariable(value="id_factura") Long id_factura,Model model, Principal principal, RedirectAttributes flash)
 	{
 		Factura factura = customerService.findFacturaById(id_factura);
 		model.addAttribute("factura", factura);
 		model.addAttribute("titulo","Factura: "+factura.getDescripcion_factura()+" con el código: "+factura.getId_factura());
+		model.addAttribute("seller", userDAO.findByNickname(principal.getName()).orElse(new UserApp()) );
+		
+		Double subtotal = factura.getTotal();
+		Double discount = 0D;
+		List<TableAmortizationResponse> tableAmortization = new ArrayList<TableAmortizationResponse>();
+		
+		if(factura.getType_paid().equals("1")) {
+			discount = subtotal * 0.33D;
+		}else if(factura.getType_paid().equals("2")) {
+			tableAmortization = iTableAmortization.generate(factura);
+		}
+		
+		Double total = subtotal - discount;
+		
+		model.addAttribute("subtotal", subtotal );
+		model.addAttribute("descuento", discount );
+		model.addAttribute("total", total );
+		
+		
+		model.addAttribute("tableAmortization", tableAmortization );
 		return"store/detalle-factura";
 	}
 	

@@ -7,9 +7,21 @@
 		$("#modal_registro_producto").modal('show');
 	}
 	
+	function AbrirModalBuscarProducto(e)
+	{
+		e.preventDefault();
+		$("#modal_buscar_producto").modal('show');
+	}
+	
 	function cerrarModal()
 	{
 		$("#modal_registro_producto").modal('hide');
+	}
+	
+	function cerrarModalBuscarProducto(e)
+	{
+		e.preventDefault();
+		$("#modal_buscar_producto").modal('hide');
 	}
 
 	$('table .editar').on('click',function(){

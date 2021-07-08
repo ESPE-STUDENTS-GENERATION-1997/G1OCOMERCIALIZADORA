@@ -72,7 +72,7 @@ INSERT INTO xeusa_usuario (fec_creacion_usuario,fec_modificacion_usuario,fec_nac
 
 	 
 INSERT INTO xeest_estusu (fec_asignacion_estusu,fec_expiracion_estusu,observation_estusu,fk_cod_estado,fk_cod_user) VALUES
-	 ('2021-02-23 14:25:10',NULL,NULL,1,1),
+	 ('2021-02-23 14:25:10',NULL,NULL,2,1),
 	 ('2021-02-23 14:25:10',NULL,NULL,2,2),
 	 ('2021-03-10 05:00:00',NULL,'generación de contraseña por pruebas',5,3),
 	 ('2021-03-08 23:50:51.464986000',NULL,NULL,2,4);
@@ -91,28 +91,31 @@ INSERT INTO xeper_perfil (fec_asignacion_perfil,fec_expiracion_perfil,fec_modifi
 
 
 INSERT INTO fepro_produc (created_product,description_product,img_product,name_product,price_product,stock_product) VALUES
-	 ('2021-03-05','Descripción del producto 1','1e133819-9824-40b7-a2c1-2bd1c647fa25_55 vision.jpg','producto 1',2.5,4),
-	 ('2021-03-06','Descripción del producto 2','0e6eb80d-3348-4257-a298-f19198552d30_20 integridad.jpg','producto 2',0.25,5),
-	 ('2020-10-10','descripción del producto 4','782cffca-358f-4a73-a402-3b6ab0ac68a5_36 servicio8.jpg','producto 4',0.75,4);
+	 ('2021-03-05','Samsung Galaxy A51','2eb2071f-f5f6-47e3-8a24-981d1c48aa89_A51.jpg','Celular A51',189.58,4),
+	 ('2021-03-06','Laptop HP 13','aeb70f3b-0098-4530-9029-c53335bcc09f_hp-lap13.jpg','hp 13',999.80, 5),
+	 ('2020-10-10','Cocina Indurama','f01bcca9-ba2d-4f10-bffa-752f13ea526d_cocina.jpg','Cocina Indurama',580.00,4);
 
 
 
 INSERT INTO fecli_client (address_customer,document_customer,email_customer,lastnames_customer,names_customer,phone_customer) VALUES
-	 ('sangolqui','1723401715','stalincrisanto@hotmail.com','Crisanto','Stalin','0995077348'),
+	 ('sangolqui','1723401715','xavier@hotmail.com','Vaca','Xavier','0995077348'),
 	 ('conocoto','1708051311','luiscrisanto@hotmail.com','Caiza','Oswaldo','0998868008'),
-	 ('sangolqui','1708102718','miriam@hotmail.com','Caiza Llumiquinga','Miriam Mónica','0996901618');
+	 ('sangolqui','1708102718','miriam@hotmail.com','Caiza Llumiquinga','Miriam Mónica','0996901618'),
+     ('sangolqui','1723401716','paul@hotmail.com','Alcivar','Paul','0995077348'),
+	 ('conocoto','1708051312','oscar@hotmail.com','Sandoval','Oscar','0998868008'),
+	 ('sangolqui','1708102719','juan@hotmail.com','Mendoza','Juan','0996901618');
 
 INSERT INTO fefac_factur (descripcion_factura,emision_factura,observacion_factura,customer_id_customer) VALUES
-	 ('factura de compras','2021-03-07',NULL,1),
+	 ('001-001-000000001','2021-03-07',NULL,1),
 	 ('Factura de compras generales','2021-03-08',NULL,2),
-	 ('Factura de artículos de aseo','2021-03-08',NULL,1),
+	 ('001-001-000000002','2021-03-08',NULL,1),
 	 ('Compra de artículos escolares','2021-03-08',NULL,2),
 	 ('Factura de compra de víveres','2021-03-08',NULL,3),
-	 ('factura de compras','2021-03-08',NULL,1),
-	 ('','2021-03-08',NULL,1),
+	 ('001-001-000000006','2021-03-08',NULL,1),
+	 ('001-001-000000007','2021-03-08',NULL,1),
 	 ('','2021-03-08',NULL,2),
-	 ('','2021-03-08',NULL,1),
-	 ('compras','2021-03-09',NULL,1);
+	 ('001-001-000000009','2021-03-08',NULL,1),
+	 ('001-001-000000010','2021-03-09',NULL,1);
 
 INSERT INTO feite_itefac (cantidad_item,product_code_product,factura_id) VALUES
 	 (1,1,1),

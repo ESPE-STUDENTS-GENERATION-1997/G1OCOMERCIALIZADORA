@@ -3,6 +3,8 @@
 
 <body>
 	<script type="text/javascript" th:fragment="javascript">
+		let detailsInvoice  = []
+	
 		$(document).ready(function(){
 		
 			$("#buscar_producto").autocomplete({
@@ -15,32 +17,32 @@
 						},
 						success: function(data){
 							response($.map(data, function(item){
+								console.log(item)
 								return{
 									value: item.code_product,
 									label: item.name_product,
 									price: item.price_product,
+									stock: item.stock_product,
+									description: item.description_product,
+									img: item.img_product
 								};
 						}));
 					},
+				  classes: {
+				    "ui-autocomplete": "highlight"
+				  }
 				});
 			},
 			select: function(event,ui){
 				$("#buscar_producto").val(ui.item.label);
 				
-				if(itemsHelper.hasProducto(ui.item.value)){
-					itemsHelper.incrementarCantidad(ui.item.value,ui.item.price);
-					return false;
-				}
+					$("#buscar_prod_mondal_code").val(ui.item.value);
+					$("#buscar_prod_mondal_desc").val(ui.item.description);
+					$("#buscar_prod_mondal_price").val(ui.item.price);
+					$("#buscar_prod_mondal_stock").val(ui.item.stock);
+					$("#buscar_prod_mondal_img").attr("src", '/uploads/' +  ui.item.img );
 				
-				var linea = $("#plantillaItemsFactura").html();
 				
-				linea = linea.replace(/{CODE_PRODUCT}/g, ui.item.value);
-				linea = linea.replace(/{NAME_PRODUCT}/g, ui.item.label);
-				linea = linea.replace(/{PRICE_PRODUCT}/g, ui.item.price);
-				
-				$("#cargarItemProductos tbody").append(linea);				
-				
-				itemsHelper.calcularImporte(ui.item.value,ui.item.price,1)
 				return false;
 			}
 		});
@@ -50,6 +52,59 @@
 		});
 	});
 	
+	const addProduct = () => {
+		
+		const stock = document.getElementById("buscar_prod_mondal_stock").value
+		const amount = document.getElementById("buscar_prod_mondal_amount").value
+		const code = document.getElementById("buscar_prod_mondal_code").value
+		const name = document.getElementById("buscar_producto").value
+		const price = document.getElementById("buscar_prod_mondal_price").value
+		const totalProduct = amount * price
+		
+		if(amount > stock){
+			alert("La Cantidad ingresada supera el Stock");
+		}else {
+			var linea = $("#plantillaItemsFactura").html();
+				
+			linea = linea.replace(/{CODE_PRODUCT}/g, code);
+			linea = linea.replace(/{NAME_PRODUCT}/g, name);
+			linea = linea.replace(/{PRICE_PRODUCT}/g, price);
+			linea = linea.replace(/{AMOUNT_PRODUCT}/g, amount);
+			linea = linea.replace(/{TOTAL_PRODUCT}/g, totalProduct);
+			$("#cargarItemProductos tbody").append(linea);				
+			
+			detailsInvoice.push({
+					stock,
+					amount,
+					code,
+					name,
+					price,
+					totalProduct
+			})
+			calculateTotals()
+			//itemsHelper.calcularImporte(ui.item.value,ui.item.price,1)
+			$("#modal_buscar_producto").modal('hide');
+		}
+	}
+	
+	const calculateTotals = () => {
+		let subTotal = 0;
+		let  discount = 0.00;
+		detailsInvoice.forEach(element => {
+			subTotal = subTotal + element.totalProduct
+		})
+		
+		const formPaid = document.getElementById("select_form_paid").value
+		
+		if(formPaid === '1'){
+			discount = subTotal * 0.33
+		}
+		
+		document.getElementById("invoice_subtotal").value = subTotal
+		document.getElementById("invoice_discount").value = discount
+		document.getElementById("invoice_total").value = subTotal - discount
+	}
+ 	
 	var itemsHelper = {
 		calcularImporte: function(id, precio, cantidad){
 			$("#total_importe_"+id).html(parseFloat(precio)*parseInt(cantidad));
@@ -81,6 +136,170 @@
 	        $('#gran_total').html(total);
     	}
 	}
+	
+	
+
+
+	$('#select_form_paid').on('change', function() {
+	  const divDetailsPaid = document.getElementById('divDetailsPaid')
+	   const button = document.querySelector('#submit_invoince_button')
+	  
+	  const buttonCredit = document.getElementById('request_credit')
+	  
+	  if(this.value === '2'){
+	 
+	  button.disabled = true
+	  
+	  	const html = `
+	  		<div class="col-lg-4">Número de Cuotas</div>
+			<div class="col-lg-7">
+			<input type="number" class="form-control" placeholder="Ingrese el nombre del producto"  id="select_num_fee" min="1" max="100"
+			name="numero_cuotas"  />
+				
+			</div>								
+	  	`
+	  	divDetailsPaid.innerHTML = html
+	  	
+	  	const htmlBtn = `
+	  		<button type="button" class="btn btn-info" onclick="handleRequestCredit()" >Solicitar Crédito a Banquito</button>
+	  	  `
+	  	 buttonCredit.innerHTML = htmlBtn
+	  }else if(this.value === '1'){
+	  
+	    button.disabled = false
+	     buttonCredit.innerHTML = ""
+	  	const html = ``
+	  	divDetailsPaid.innerHTML = html
+	  }
+	  
+	  calculateTotals()
+	});
+	
+
+	
+	const handleRequestCredit = () => {
+	
+		const data = {
+		  amount: Number(document.getElementById("invoice_total").value),
+		  idClient: Number(document.getElementById("customerId").value),
+		  interestRateYear: 16,
+		  numFee: Number(document.getElementById("select_num_fee").value),
+		  reason: "TV 14'",
+		  type: "OTROS."
+		}
+		
+		if(data.amount <= 0){
+			alert("Debe ingresar al menos un detalle a la factura");
+			return ;
+		}
+		
+		if(data.idClient === null || typeof data.idClient === "undefined" ||  data.idClient === 0 ){
+			alert("Debe ingresar los datos del cliente");
+			return ;
+		}
+		
+		if(data.numFee === null || typeof data.numFee === "undefined" ||  data.numFee === 0){
+			alert("Debe ingresar el número de cuotas");
+			return ;
+		}
+		
+		const config =  {
+			method: 'POST',
+		 	headers: {
+	      		'Content-Type': 'application/json'
+	    	},
+		    body: JSON.stringify(data) 
+		}
+		
+		console.log(data)
+		
+		const resultRequestDiv = document.getElementById('result_request_credit')
+		
+		 let htmlResultDiv = `
+		    <div class="alert alert-info" role="alert">
+			  Cargando
+			</div>
+		    `
+		    
+		  resultRequestDiv.innerHTML = htmlResultDiv
+	
+		fetch("https://espe-2021-banquito.herokuapp.com/api/v1/credit", config)
+		.then((response)  => {
+		    return response.json();
+		  }).then(function(responseData) {
+		  	
+		  	if(responseData.status === 500) {
+		  	 	const buttonSuccessRequestCredit = document.querySelector('#btn_success_request_credit')
+		  		buttonSuccessRequestCredit.disabled = true
+			  	htmlResultDiv = `
+			    <div class="alert alert-danger" role="alert">
+				  <b>Crédito Rechazadao.</b> <br/> El cliente tiene un crédito vigente. 
+				  Para acceder al nuevo crédito el cliente debe cancelar el anterior.
+				</div>
+			    `
+			    
+			    resultRequestDiv.innerHTML = htmlResultDiv
+		  	}else {
+			  	htmlResultDiv = `
+			    <div class="alert alert-success" role="alert">
+				  Crédito Aprobado
+				</div>
+			    `
+			    
+			    resultRequestDiv.innerHTML = htmlResultDiv
+			    
+			     const resultRequestTable = document.getElementById('result_table_credit')
+			     
+			     let tableHTML = ""
+			     
+			     const rows = responseData.tableAmortization
+			     
+			     if(Array.isArray(rows)){
+			     	rows.forEach((item, index) => {
+			     		tableHTML = tableHTML + 	`
+					     <tr>
+						      <th scope="row">${item.index}</th>
+						      <td>${item.valueFee}</td>
+						      <td>${item.interestPaid}</td>
+						      <td>${item.capitalPaid}</td>
+						      <td>${item.balance}</td>
+						    </tr>
+					     `
+			     	})
+			     	
+			     }
+			     
+			     resultRequestTable.innerHTML = tableHTML
+			  	
+		  	}
+		    
+		  
+		    
+		  }).catch(function(error) {
+		  		console.log(error)
+			   htmlResultDiv = `
+			    <div class="alert alert-danger" role="alert">
+				  El Cliente tiene otro crédito activo
+				</div>
+		    `
+		    
+		    resultRequestDiv.innerHTML = htmlResultDiv
+			});
+		$("#modal_solicitar_credito").modal('show');
+	}
+	
+	const handleCloseSuccessRequestCredit = () => {
+		  const button = document.querySelector('#submit_invoince_button')
+		  button.disabled = false
+		$("#modal_solicitar_credito").modal('hide');
+	}
+	
+	const handleCloseRequestCredit = () => {
+		  
+		$("#modal_solicitar_credito").modal('hide');
+	}
+ 	
+	
 	</script>
 
 </body>
