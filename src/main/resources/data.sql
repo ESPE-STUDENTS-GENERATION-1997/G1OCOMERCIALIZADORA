@@ -93,7 +93,7 @@ INSERT INTO xeper_perfil (fec_asignacion_perfil,fec_expiracion_perfil,fec_modifi
 INSERT INTO fepro_produc (created_product,description_product,img_product,name_product,price_product,stock_product) VALUES
 	 ('2021-03-05','Samsung Galaxy A51','2eb2071f-f5f6-47e3-8a24-981d1c48aa89_A51.jpg','Celular A51',189.58,94),
 	 ('2021-03-06','Laptop HP 13','aeb70f3b-0098-4530-9029-c53335bcc09f_hp-lap13.jpg','hp 13',999.80, 85),
-	 ('2020-10-10','Cocina Indurama','f01bcca9-ba2d-4f10-bffa-752f13ea526d_cocina.jpg','Cocina Indurama',580.00,100);
+	 ('2020-10-10','Cocina Indurama','f01bcca9-ba2d-4f10-bffa-752f13ea526d_cocina.jpg','Cocina Indurama',580.00,99);
 
 
 
