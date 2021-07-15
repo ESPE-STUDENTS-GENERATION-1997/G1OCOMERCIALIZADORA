@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,7 +29,7 @@ public class Product implements Serializable{
 	@Column( length = 300)
 	private String description_product;
 	private Double price_product;
-	private Long stock_product;
+	private Integer stock_product;
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyy-MM-dd")
 	private Date created_product;

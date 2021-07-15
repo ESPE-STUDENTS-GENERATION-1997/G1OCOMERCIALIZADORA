@@ -33,7 +33,7 @@
 					<th>Email</th>
 					<th>Teléfono</th>
 					<th>Dirección</th>
-					<th>Facturas</th>
+					<th>Ver Facturas</th>
 					<th>Acciones</th>
 				</tr>
 			</thead>
@@ -44,8 +44,8 @@
 					<td th:text="${customer.email_customer}"></td>
 					<td th:text="${customer.phone_customer}"></td>
 					<td th:text="${customer.address_customer}"></td>
-					<td>
-						<a class="btn btn-success" th:href="@{/fact-cliente/}+${customer.id_customer}">Ver Facturas</a>
+					<td class="row justify-content-center">
+						<a class="btn btn-info col-4" th:href="@{/fact-cliente/}+${customer.id_customer}"> <i class="fas fa-info-circle"></i> </a>
 					</td>
 					<td>
 						<button type="button" class="editar btn btn-primary">

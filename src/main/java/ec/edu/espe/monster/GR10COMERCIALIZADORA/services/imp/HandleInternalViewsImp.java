@@ -118,7 +118,7 @@ public class HandleInternalViewsImp implements IHandleInternalViews{
 		
 		List<String> profilesDescription = new ArrayList<String>();
 		for(ProfileUser profile: profiles) {
-			String description = String.format("Sistma: %s, fecha de asignación: %s", profile.getSystemProfile().getName(), profile.getAssignmentDate().format(formatter) );
+			String description = String.format("Sistema: %s, fecha de asignación: %s", profile.getSystemProfile().getName(), profile.getAssignmentDate().format(formatter) );
 			description = description + ((profile.getModifiedDate() != null)? ".<br/> Fecha de Modificación: "+ profile.getModifiedDate().format(formatter) : "");
 			description = description + ((profile.getExpirationDate() != null)? ".<br/> Fecha de Expiración: "+ profile.getExpirationDate().format(formatter) : "");
 			profilesDescription.add(description);

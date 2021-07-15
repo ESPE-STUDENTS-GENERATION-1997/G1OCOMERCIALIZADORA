@@ -59,7 +59,7 @@
 		const code = document.getElementById("buscar_prod_mondal_code").value
 		const name = document.getElementById("buscar_producto").value
 		const price = document.getElementById("buscar_prod_mondal_price").value
-		const totalProduct = amount * price
+		const totalProduct = Math.round( amount * price *100 ) / 100
 		
 		if(amount > stock){
 			alert("La Cantidad ingresada supera el Stock");
@@ -100,9 +100,9 @@
 			discount = subTotal * 0.33
 		}
 		
-		document.getElementById("invoice_subtotal").value = subTotal
-		document.getElementById("invoice_discount").value = discount
-		document.getElementById("invoice_total").value = subTotal - discount
+		document.getElementById("invoice_subtotal").value = Math.round( subTotal *100 ) / 100
+		document.getElementById("invoice_discount").value = Math.round( discount *100 ) / 100
+		document.getElementById("invoice_total").value = Math.round( (subTotal - discount ) *100 ) / 100
 	}
  	
 	var itemsHelper = {

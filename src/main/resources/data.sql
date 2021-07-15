@@ -21,9 +21,9 @@ INSERT INTO xeest_estado (vigente_estado,descripcion_estado,keyword_estado,acces
  
  
 INSERT INTO xesis_sistem (vigencia_sistema,descripcion_sistema,keyword_sistema,nombre_sistema,id_sistema_original) VALUES
-	 (1,'Administrar usuarios y  productos','A001','Administracion',NULL),
+	 (1,'Administrar usuarios y  productos','A001','Administración',NULL),
 	 (1,'Generar Reportes del Sistema','A002','Reportes',NULL),
-	 (1,'Generar Comprobantes','A003','Comprobantes Eléctronicos',NULL),
+	 (1,'Generar Comprobantes','A003','Comprobantes Electrónicos',NULL),
 	 (1,'Programar tareas de marketing','A004','Mercadeo',NULL),
 	 (1,'Tienta Virtual, enfocada a los clientes externos','A005','Tienda Virtual',NULL),
 	 (1,'Tiene acceso a todos los sistemas y subsitemas registrados','A000','Superusuario',NULL),
@@ -91,9 +91,9 @@ INSERT INTO xeper_perfil (fec_asignacion_perfil,fec_expiracion_perfil,fec_modifi
 
 
 INSERT INTO fepro_produc (created_product,description_product,img_product,name_product,price_product,stock_product) VALUES
-	 ('2021-03-05','Samsung Galaxy A51','2eb2071f-f5f6-47e3-8a24-981d1c48aa89_A51.jpg','Celular A51',189.58,4),
-	 ('2021-03-06','Laptop HP 13','aeb70f3b-0098-4530-9029-c53335bcc09f_hp-lap13.jpg','hp 13',999.80, 5),
-	 ('2020-10-10','Cocina Indurama','f01bcca9-ba2d-4f10-bffa-752f13ea526d_cocina.jpg','Cocina Indurama',580.00,4);
+	 ('2021-03-05','Samsung Galaxy A51','2eb2071f-f5f6-47e3-8a24-981d1c48aa89_A51.jpg','Celular A51',189.58,94),
+	 ('2021-03-06','Laptop HP 13','aeb70f3b-0098-4530-9029-c53335bcc09f_hp-lap13.jpg','hp 13',999.80, 85),
+	 ('2020-10-10','Cocina Indurama','f01bcca9-ba2d-4f10-bffa-752f13ea526d_cocina.jpg','Cocina Indurama',580.00,100);
 
 
 
@@ -105,17 +105,17 @@ INSERT INTO fecli_client (address_customer,document_customer,email_customer,last
 	 ('conocoto','1708051312','oscar@hotmail.com','Sandoval','Oscar','0998868008'),
 	 ('sangolqui','1708102719','juan@hotmail.com','Mendoza','Juan','0996901618');
 
-INSERT INTO fefac_factur (descripcion_factura,emision_factura,observacion_factura,customer_id_customer) VALUES
-	 ('001-001-000000001','2021-03-07',NULL,1),
-	 ('Factura de compras generales','2021-03-08',NULL,2),
-	 ('001-001-000000002','2021-03-08',NULL,1),
-	 ('Compra de artículos escolares','2021-03-08',NULL,2),
-	 ('Factura de compra de víveres','2021-03-08',NULL,3),
-	 ('001-001-000000006','2021-03-08',NULL,1),
-	 ('001-001-000000007','2021-03-08',NULL,1),
-	 ('','2021-03-08',NULL,2),
-	 ('001-001-000000009','2021-03-08',NULL,1),
-	 ('001-001-000000010','2021-03-09',NULL,1);
+INSERT INTO fefac_factur (descripcion_factura,emision_factura,observacion_factura,customer_id_customer, type_paid, numero_cuotas) VALUES
+	 ('001-001-000000001','2021-03-07',NULL,1,'1', 0),
+	 ('Factura de compras generales','2021-03-08',NULL,2,'1', 0),
+	 ('001-001-000000002','2021-03-08',NULL,1,'1', 0),
+	 ('Compra de artículos escolares','2021-03-08',NULL,2,'1', 0),
+	 ('Factura de compra de víveres','2021-03-08',NULL,3,'1', 0),
+	 ('001-001-000000006','2021-03-08',NULL,1,'1', 0),
+	 ('001-001-000000007','2021-03-08',NULL,1,'1', 0),
+	 ('','2021-03-08',NULL,2,'1', 0),
+	 ('001-001-000000009','2021-03-08',NULL,1,'1', 0),
+	 ('001-001-000000010','2021-03-09',NULL,1,'2',10);
 
 INSERT INTO feite_itefac (cantidad_item,product_code_product,factura_id) VALUES
 	 (1,1,1),

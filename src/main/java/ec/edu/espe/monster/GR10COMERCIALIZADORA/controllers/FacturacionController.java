@@ -4,8 +4,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IProductDAO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.DAOs.IUserAppDAO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.TableAmortizationResponse;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.Customer;
@@ -46,6 +47,9 @@ public class FacturacionController {
 	private IUserAppDAO userDAO;
 	
 	@Autowired
+	private IProductDAO productoDAO;
+	
+	@Autowired
 	private IGenerateTableAmortization iTableAmortization;
 	
 	@GetMapping("/store/factura")
@@ -74,7 +78,7 @@ public class FacturacionController {
 						  @RequestParam (name="cantidad[]", required=false) Integer[] cantidad,
 						  RedirectAttributes flash)
 	{
-		
+		List<Product> products = new ArrayList<Product>();
 		for(int i = 0; i < itemId.length; i++)
 		{
 			Product producto = customerService.findProductById(itemId[i]);
@@ -82,11 +86,21 @@ public class FacturacionController {
 			linea.setCantidad_item(cantidad[i]);
 			linea.setProduct(producto);
 			factura.addItemFactura(linea);
+			//Menorar el stock
+			Integer stock = producto.getStock_product() - cantidad[i];
+			producto.setStock_product((stock < 0) ? 0 : stock);
+			products.add(producto);
 		}
 		
+		try {
+			customerService.saveFactura(factura);
+			productoDAO.saveAll(products);
+			flash.addFlashAttribute("success", "Factura creada con éxito");
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			log.error("No se puedo actualizar los registros al generar la factura");
+		}
 		
-		customerService.saveFactura(factura);
-		flash.addFlashAttribute("success", "Factura creada con éxito");
 		
 		return "redirect:/fact-cliente/"+ factura.getCustomer().getId_customer();
 	}
@@ -101,7 +115,7 @@ public class FacturacionController {
 	{
 		Factura factura = customerService.findFacturaById(id_factura);
 		model.addAttribute("factura", factura);
-		model.addAttribute("titulo","Factura: "+factura.getDescripcion_factura()+" con el código: "+factura.getId_factura());
+		model.addAttribute("titulo","Factura:  001-001-000000"+factura.getId_factura());
 		model.addAttribute("seller", userDAO.findByNickname(principal.getName()).orElse(new UserApp()) );
 		
 		Double subtotal = factura.getTotal();
@@ -116,9 +130,9 @@ public class FacturacionController {
 		
 		Double total = subtotal - discount;
 		
-		model.addAttribute("subtotal", subtotal );
-		model.addAttribute("descuento", discount );
-		model.addAttribute("total", total );
+		model.addAttribute("subtotal",  String.format("%.2f", subtotal) );
+		model.addAttribute("descuento",  String.format("%.2f", discount) );
+		model.addAttribute("total", String.format("%.2f", total) );
 		
 		
 		model.addAttribute("tableAmortization", tableAmortization );
