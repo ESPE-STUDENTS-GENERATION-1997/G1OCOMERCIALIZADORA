@@ -61,6 +61,14 @@
 		const price = document.getElementById("buscar_prod_mondal_price").value
 		const totalProduct = Math.round( amount * price *100 ) / 100
 		
+		document.getElementById("buscar_prod_mondal_stock").value = 0
+		document.getElementById("buscar_prod_mondal_amount").value = 0
+		document.getElementById("buscar_prod_mondal_code").value = 0
+		document.getElementById("buscar_producto").value = ""
+		document.getElementById("buscar_prod_mondal_desc").value = ""
+		document.getElementById("buscar_prod_mondal_price").value = 0.0
+		$("#buscar_prod_mondal_img").attr("src", '/img/default-placeholder.png' );
+		
 		if(amount > stock){
 			alert("La Cantidad ingresada supera el Stock");
 		}else {
