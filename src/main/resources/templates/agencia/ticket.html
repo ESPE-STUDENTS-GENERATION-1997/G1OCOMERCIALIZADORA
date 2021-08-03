@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/internt-layout.html :: 'head' ">
+
+</head>
+<body id="page-top">
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row justify-content-md-end border m-2 p-2">
+			<div class="col-lg-3">
+				<button type="button" class="btn btn-outline-danger btn-block"
+					onclick="window.print()">Imprimir</button>
+			</div>
+		</div>
+		<div class="row border  justify-content-between">
+			<div class="col-sm-3 mr-4">
+				<div class="card" style="width: 18rem;">
+					<img th:src="@{/img/Viajecito-Logo.png}" class="card-img-top"
+						alt="Logo Viajecito S.A.">
+					<div class="card-body">
+						<h5 class="card-title">Viajecito S.A.</h5>
+						<p class="card-text">
+							RUC: 0990633436001 <br /> Teléfono: 0988447733 <br />
+							Dirección: Av. NN.UU N25-509
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4 align-self-center">
+				<div class="alert alert-warning" role="alert">Boleto de Avión
+				</div>
+				<div class="row ">
+					<div class="form-group">
+						<div class="col-sm-6 ">Vuelo Número:</div>
+						<div class="col-sm-12">
+							<input class="form-control is-valid" disabled th:value="${flight}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-6">Fecha de sálida:</div>
+						<div class="col-sm-12">
+							<input class="form-control is-valid" disabled  th:value="${dateFlight}"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-6">Precio:</div>
+						<div class="col-sm-12">
+							<input class="form-control is-valid" disabled th:value="${price}"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-6">Asiento:</div>
+						<div class="col-sm-12">
+							<input class="form-control is-valid" disabled  th:value="${asiento}"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3 ml-4">
+				<div class="card" style="width: 18rem;">
+					<img
+						src="https://iair.mx/documentos/aerolineas_logo/condor-cargo.png"
+						class="card-img-top" alt="Aerolinea Condor">
+					<div class="card-body">
+						<h5 class="card-title">Aerolinea Condor</h5>
+						<p class="card-text">
+							RUC: 0990633436001 <br /> Teléfono: 0988447733 <br />
+							Dirección: Av. 10 de Agosto
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr />
+	</div>
+
+</body>
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery-ui.min.js}"></script>
+
+<footer th:replace="layouts/internt-layout.html :: 'footer' "></footer>
+</html>

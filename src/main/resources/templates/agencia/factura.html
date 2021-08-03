@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/internt-layout.html :: 'head' ">
+
+</head>
+<body id="page-top">
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row justify-content-md-end border m-2 p-2">
+			<div class="col-lg-3">
+				<button type="button" class="btn btn-outline-danger btn-block"
+					onclick="window.print()">Imprimir</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="card" style="width: 18rem;">
+					<img th:src="@{/img/Viajecito-Logo.png}" class="card-img-top"
+						alt="Logo Viajecito S.A.">
+					<div class="card-body">
+						<h5 class="card-title">Viajecito S.A.</h5>
+						<p class="card-text">
+							RUC: 0990633436001 <br /> Teléfono: 0988447733 <br />
+							Dirección: Av. NN.UU N25-509
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8">
+				<div class="container">
+					<div class="row">
+						<div class="alert alert-warning" role="alert">Datos de la
+							Factura:</div>
+					</div>
+					<div class="row">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Fecha de Emisión:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria" th:value="${date}"
+									disabled>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Hora de Emisión:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria" th:value="${time}"
+									disabled>
+							</div>
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="alert alert-info" role="alert">Guía de Turismo</div>
+					</div>
+					<div class="row">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Nombres:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria"
+									th:value="${seller.names + ' ' + seller.lastnames}" disabled>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Correo:</label> <input type="text"
+									class="form-control is-valid"
+									placeholder="Dirección domiciliaria" th:value="${seller.email}"
+									disabled>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Identificación:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria"
+									th:value="${seller.numDocument}" disabled>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Teléfono:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria" th:value="${seller.phone}"
+									disabled>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<hr />
+		<div class="container">
+			<div class="row">
+				<div class="alert alert-success" role="alert">Datos de Cliente</div>
+			</div>
+			<div class="row">
+				<div class="form-row">
+
+					<div class="form-group col-md-12">
+						<label for="address_costumer">Nombres:</label> <input type="text"
+							th:value="${invoice.getNames_customer()}" class="form-control"
+							disabled id="names_costumer">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="email_costumer">Correo:</label> <input type="text"
+							th:value="${invoice.getEmail_customer()}" class="form-control"
+							id="email_costumer" disabled>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="address_costumer">Identificación:</label> <input
+							th:value="${invoice.getDocument_customer()}" type="text"
+							class="form-control" id="document_costumer" disabled>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="phone_costumer">Teléfono:</label> <input type="text"
+							th:value="${invoice.getPhone_customer()}" class="form-control"
+							id="phone_costumer" disabled>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="address_costumer">Dirección:</label> <input
+							th:value="${invoice.getAddress_customer()}" type="text"
+							class="form-control" id="address_costumer" disabled>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr />
+		<div class="container">
+			<div class="row">
+				<div class="alert alert-success" role="alert">Detalles de los
+					Vuelos</div>
+			</div>
+			<div class="row">
+				<div class="form-row">
+					<div class="form-group col-md-12">
+						<h4>Detalles de los Vuelos Seleccionados</h4>
+					</div>
+					<div class="form-group col-md-12">
+
+						<table class="table" id="table_tickets">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Vuelo Descripción</th>
+									<th scope="col">Fecha sálida</th>
+									<th scope="col">Precio por Boleto</th>
+									<th scope="col">Cantidad de Boletos</th>
+									<th scope="col">Total</th>
+									<th scope="col">Boletos</th>
+								</tr>
+							</thead>
+							<tbody id="table_tickets_tbody">
+								<tr th:each="detail, itemStat : ${invoice.items}">
+									<td th:text="${itemStat.index + 1}"></td>
+									<td th:text="${'Número de Vuelo: ' + detail.getFlight()}">
+									</td>
+									<td th:text="${detail.getDateFlight()}"></td>
+									<td th:text="${detail.getPrice()}"></td>
+									<td th:text="${detail.getNumTickets()}"></td>
+									<td th:text="${detail.getTotal()}"></td>
+									<td>
+										<button type="button" class="editar btn btn-info" 
+										th:onclick="handleEditRow([[${detail.getFlight()}]],[[${detail.getDateFlight()}]] ,[[${detail.getPrice()}]]  ,[[${detail.getNumTickets()}]]);" 
+										>
+											<i class="fas fa-info-circle"></i>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6"></div>
+				<div class="col-lg-6">
+					<div class="row">
+						<div class="col-lg-6" align="right">Total:</div>
+						<div class="col-lg-6">
+							<input class="form-control" disabled id="invoice_total_ticket"
+								th:value="${invoice.getTotalInvoice()}">
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="modal_mostrar_boletos" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						Boletos comprados del Vuelo Número: <b id="modal_mostrar_boletos_title"></b>
+					</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Número Boleto</th>
+									<th scope="col">Fecha sálida</th>
+									<th scope="col">Precio</th>
+									<th scope="col">Imprimir Boleto</th>
+								</tr>
+							</thead>
+							<tbody id="modal_table_tickets_tbody" >
+							
+							</tbody>
+						</table>
+						<div class="row justify-content-md-center">
+							<div class="col-sm-6">
+								<button type="button" class="btn btn-danger" >Cerrar</button>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery-ui.min.js}"></script>
+
+<script src="/js/agency.js"></script>
+<footer th:replace="layouts/internt-layout.html :: 'footer' "></footer>
+</html>

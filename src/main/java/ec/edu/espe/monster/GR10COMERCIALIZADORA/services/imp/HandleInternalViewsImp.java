@@ -49,8 +49,8 @@ public class HandleInternalViewsImp implements IHandleInternalViews{
 		List<ProfileUser> profiles = this.loadProfileUser(user);
 		
 		return this.buildMenu(profiles);
-		
 	}
+
 	
 	private List<MenuItemDTO> buildMenu(List<ProfileUser> profiles){
 		List<MenuItemDTO> menu = new ArrayList<MenuItemDTO>();
@@ -64,6 +64,9 @@ public class HandleInternalViewsImp implements IHandleInternalViews{
 			}
 			
 			MenuItemDTO item = new MenuItemDTO();
+			item.setSystemLogo(systemProfile.getImgLogo());
+			item.setSystemCoverPage(systemProfile.getImgCoverPage());
+			item.setSystem(systemProfile.getKeyword());
 			item.setIsMenuCategory(true);
 			item.setKeyword(systemProfile.getKeyword());
 			item.setName(systemProfile.getName());

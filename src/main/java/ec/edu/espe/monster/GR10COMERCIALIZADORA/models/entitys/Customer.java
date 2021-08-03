@@ -2,7 +2,6 @@ package ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,6 +36,13 @@ public class Customer implements Serializable {
 	@OneToMany(mappedBy = "customer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Factura> facturas;
+	
+	
+	@OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<InvoicesAgency> invoiceAgency;
+	
+	
 	public Customer()
 	{
 		facturas = new ArrayList<Factura>();

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layouts/internt-layout.html :: 'head' ">
+
+</head>
+<body id="page-top">
+	<header th:replace="layouts/internt-layout.html :: 'header' "></header>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="card" style="width: 18rem;">
+					<img th:src="@{/img/Viajecito-Logo.png}" class="card-img-top"
+						alt="Logo Viajecito S.A.">
+					<div class="card-body">
+						<h5 class="card-title">Viajecito S.A.</h5>
+						<p class="card-text">
+							RUC: 0990633436001 <br /> Teléfono: 0988447733 <br />
+							Dirección: Av. NN.UU N25-509
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8">
+				<div class="container">
+					<div class="row">
+						<div class="alert alert-warning" role="alert">Datos de la
+							Factura:</div>
+					</div>
+					<div class="row">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Fecha de Emisión:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria" th:value="${date}"
+									disabled>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Hora de Emisión:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria" th:value="${time}"
+									disabled>
+							</div>
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="alert alert-info" role="alert">Guía de Turismo</div>
+					</div>
+					<div class="row">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Nombres:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria"
+									th:value="${seller.names + ' ' + seller.lastnames}" disabled>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Correo:</label> <input type="text"
+									class="form-control is-valid"
+									placeholder="Dirección domiciliaria" th:value="${seller.email}"
+									disabled>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Identificación:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria"
+									th:value="${seller.numDocument}" disabled>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="address_costumer">Teléfono:</label> <input
+									type="text" class="form-control is-valid"
+									placeholder="Dirección domiciliaria" th:value="${seller.phone}"
+									disabled>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<hr />
+		<div class="container">
+			<div class="row">
+				<div class="alert alert-success" role="alert">Datos de Cliente</div>
+			</div>
+			<div class="row">
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="address_costumer">Puede buscarlo por: nombres,
+							correo o identificación.</label>
+					</div>
+					<div class="form-group col-md-6">
+						<input type="text" class="form-control" name="buscar_cliente"
+							id="buscar_cliente">
+					</div>
+					<div class="form-group col-md-12">
+						<label for="address_costumer">Nombres:</label> <input type="text"
+							th:value="${invoice.getNames_customer()}"
+							class="form-control" disabled id="names_costumer">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="email_costumer">Correo:</label> <input type="text"
+							th:value="${invoice.getEmail_customer()}"
+							class="form-control" id="email_costumer" disabled>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="address_costumer">Identificación:</label> <input
+							th:value="${invoice.getDocument_customer()}"
+							type="text" class="form-control" id="document_costumer" disabled>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="phone_costumer">Teléfono:</label> <input type="text"
+							th:value="${invoice.getPhone_customer()}"
+							class="form-control" id="phone_costumer" disabled>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="address_costumer">Dirección:</label> <input
+							th:value="${invoice.getAddress_customer()}"
+							type="text" class="form-control" id="address_costumer" disabled>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr />
+		<div class="container">
+			<form th:action="@{/agencia}" th:object="${invoice}" method="post">
+				<input type="hidden" id="customerId" th:field="*{id_customer}"
+					name="id_customer" th:value="${id_customer}" >
+						<input type="hidden" th:field="*{names_customer}"  th:value="*{names_customer}">
+						<input type="hidden" th:field="*{document_customer}" th:value="*{document_customer}">
+						<input type="hidden" th:field="*{email_customer}" th:value="*{email_customer}"> 
+						<input type="hidden" th:field="*{phone_customer}" th:value="*{phone_customer}">
+						<input type="hidden" th:field="*{address_customer}" th:value="*{address_customer}">
+					
+				<div class="row">
+					<div class="alert alert-success" role="alert">Detalles de los
+						Vuelos</div>
+				</div>
+				<div class="row">
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<h4>Buscar los Vuelos</h4>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="address_costumer">Ciudad Origen:</label> <select
+								class="custom-select" id="cityOrigin">
+								<option selected disabled value="0">Seleccione una
+									Ciudad</option>
+								<option th:each="city : ${cities}" th:value="${city.id}"
+									th:text="${city.code + ' : ' +  city.name}"></option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="address_costumer">Ciudad Destino:</label> <select
+								class="custom-select" id="cityDestiny">
+								<option selected disabled value="0">Seleccione una
+									Ciudad</option>
+								<option th:each="city : ${cities}" th:value="${city.id}"
+									th:text="${city.code + ' : ' +  city.name}"></option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="address_costumer">Fecha:</label> <input type="date"
+								class="form-control" id="dateFlight">
+						</div>
+
+					</div>
+				</div>
+				<div class="row justify-content-md-center mb-2">
+					<div class="col-lg-3">
+						<button type="button" class="btn btn-info btn-block"
+							onclick="handleFindFlights()">Buscar</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<h4>Detalles de los Vuelos Seleccionados</h4>
+						</div>
+						<div class="form-group col-md-12">
+						
+							<table class="table" id="table_tickets">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Vuelo Descripción</th>
+										<th scope="col">Fecha sálida</th>
+										<th scope="col">Precio por Boleto</th>
+										<th scope="col">Cantidad de Boletos</th>
+										<th scope="col">Total</th>
+									</tr>
+								</thead>
+								<tbody id="table_tickets_tbody" >
+									<tr  th:each="detail, itemStat : *{items}">
+										<!-- td > -->
+										<td> 
+										<b th:text="${itemStat.index + 1}"> </b>
+										<input type="hidden" th:field="*{items[__${itemStat.index}__].agency}"  value="*{detail.getAgency()}"/>
+										<input type="hidden" th:field="*{items[__${itemStat.index}__].dateFlight}"  th:value="${detail.getDateFlight()}"/>
+										<input type="hidden" th:field="*{items[__${itemStat.index}__].description}"  th:value="${detail.getDescription()}"/>
+										<input type="hidden" th:field="*{items[__${itemStat.index}__].flight}"  th:value="${detail.getFlight()}"/>
+										<input type="hidden" th:field="*{items[__${itemStat.index}__].idCityOrigin}"  th:value="${detail.getIdCityOrigin()}"/>
+										<input type="hidden" th:field="*{items[__${itemStat.index}__].idCityDestiny}"  th:value="${detail.getIdCityDestiny()}"/>
+										
+										<input type="hidden" class="form-control" th:field="*{items[__${itemStat.index}__].price}"  th:value="${detail.getPrice()}"/>
+										 </td>
+										<td th:text="${'Número de Vuelo: ' + detail.getFlight()}"> </td>
+										<td th:text="${detail.getDateFlight()}"></td>
+										<td th:text="${detail.getPrice()}"></td>
+										<td>
+										<input type="number" class="form-control" th:field="*{items[__${itemStat.index}__].numTickets}"  th:value="${detail.getNumTickets()}"/>
+										</td>
+										<td th:text="${detail.getTotal()}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6"></div>
+					<div class="col-lg-6">
+						<div class="row">
+							<div class="col-lg-6" align="right">Total:</div>
+							<div class="col-lg-6">
+								<input class="form-control" disabled id="invoice_total_ticket" th:value="${invoice.getTotalInvoice()}">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-md-center mb-2">
+					<div class="col-lg-3">
+						<button type="submit" id="submit_invoince_button"
+							class="btn btn-info btn-block">Registrar Venta de
+							Boletos</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="modal_buscar_vuelos" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<b>Vuelos según las ciudades y fechas seleccionadas</b>
+					</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form th:action="@{/agencia/update-items}" method="post" th:object="${invoiceItem}">
+						
+						<input type="hidden" name="agency" id="new_item_agency"> 
+						<input type="hidden" name="dateFlight" id="new_item_dateFlight">
+						<input type="hidden" name="description" id="new_item_description">
+						<input type="hidden" name="flight" id="new_item_flight"> 
+						<input type="hidden" name="idCityOrigin" id="new_item_idCityOrigin">
+						<input type="hidden" name="idCityDestiny" id="new_item_idCityDestiny">
+						<input type="hidden" name="price" id="new_item_price"> 
+						<input type="hidden" name="numTickets" id="new_item_numTickets">
+						
+						<input type="hidden" name="id_customer" id="new_id_customer"> 
+						<input type="hidden" name="names_customer" id="new_names_customer">
+						<input type="hidden" name="document_customer" id="new_document_customer">
+						<input type="hidden" name="email_customer" id="new_email_customer"> 
+						<input type="hidden" name="phone_customer" id="new_phone_customer">
+						<input type="hidden" name="address_customer" id="new_address_customer">
+
+						<div > </div>		
+						<table class="d-none">
+							<tbody >
+							<tr  th:each="itemInvoice, itemStat : *{items}">
+								<td><input type="hidden" th:field="*{items[__${itemStat.index}__].agency}" /></td>
+								<td><input type="hidden" th:field="*{items[__${itemStat.index}__].dateFlight}" /></td>
+								<td><input type="hidden" th:field="*{items[__${itemStat.index}__].description}" /></td>
+								<td><input type="hidden" th:field="*{items[__${itemStat.index}__].flight}" /></td>
+								<td><input type="hidden" th:field="*{items[__${itemStat.index}__].idCityOrigin}" /></td>
+								<td><input type="hidden" th:field="*{items[__${itemStat.index}__].idCityDestiny}" /></td>
+								<td><input type="hidden" th:field="*{items[__${itemStat.index}__].price}" /></td>
+								<td><input type="hidden" th:field="*{items[__${itemStat.index}__].numTickets}" /></td>
+							</tr>
+							</tbody>
+						</table>
+						<div class="row" id="content_modal_buscar_vuelos">  </div>
+						<div class="row justify-content-md-center">
+							<div class="col-sm-6">
+							    <button type="submit"  class="btn btn-info " > Aceptar </button>
+							</div>
+							<div class="col-sm-6">
+								<button type="button" class="btn btn-danger">Cerrar</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery-ui.min.js}"></script>
+
+<script src="/js/agency.js"></script>
+<script th:replace="store/js/autocomplete-cliente :: javascript"></script>
+<footer th:replace="layouts/internt-layout.html :: 'footer' "></footer>
+</html>

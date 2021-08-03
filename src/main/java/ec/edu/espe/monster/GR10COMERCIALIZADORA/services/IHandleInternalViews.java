@@ -15,7 +15,7 @@ import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.entitys.UserApp;
 public interface IHandleInternalViews {
 
 	public  List<MenuItemDTO>  loadMenuByPrincipalUser(String userNickname);
-	
+		
 	public List<ProfileUser> loadProfileUser(String userNickname);
 	
 	public List<ProfileUser> loadProfileUser(UserApp user);
@@ -23,4 +23,7 @@ public interface IHandleInternalViews {
 	public UserReportProfilesDTO createReportUserProfiles(String userNickname);
 	
 	public UserReportProfilesDTO createReportUserProfiles(UserApp user);
+	
+	
+	
 }

@@ -21,4 +21,15 @@ public class LoginGetRequest {
 	private Model model;
 	private Principal principal;
 	private RedirectAttributes flash;
+	private String system;
+	
+	public LoginGetRequest(String error, Model model, Principal principal, RedirectAttributes flash) {
+		super();
+		this.error = error;
+		this.model = model;
+		this.principal = principal;
+		this.flash = flash;
+	}
+	
+	
 }

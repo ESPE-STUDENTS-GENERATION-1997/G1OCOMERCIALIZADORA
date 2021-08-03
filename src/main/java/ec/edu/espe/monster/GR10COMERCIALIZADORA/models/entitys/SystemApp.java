@@ -44,6 +44,14 @@ public class SystemApp {
 	@Column(nullable = false, name = "vigencia_sistema")
 	private Boolean current;
 	
+	
+	@Column(name = "img_portada")
+	private String imgCoverPage;
+	
+	@Column(name = "img_logo")
+	private String imgLogo;
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "id_sistema_original", referencedColumnName = "id_sistema")
 	private SystemApp originalSystem;

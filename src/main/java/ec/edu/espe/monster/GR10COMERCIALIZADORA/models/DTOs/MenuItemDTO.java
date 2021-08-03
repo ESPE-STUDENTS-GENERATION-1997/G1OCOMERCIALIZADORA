@@ -14,6 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuItemDTO {
+	private String SystemLogo;
+	private String SystemCoverPage;
+	private String System;
 	private Boolean isMenuCategory;
 	private String name;
 	private String url;

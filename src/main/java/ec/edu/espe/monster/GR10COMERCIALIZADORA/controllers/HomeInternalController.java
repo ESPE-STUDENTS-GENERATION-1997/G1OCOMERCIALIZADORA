@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.MenuItemDTO;
-import ec.edu.espe.monster.GR10COMERCIALIZADORA.models.DTOs.UserReportProfilesDTO;
 import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IHandleInternalViews;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author dlasso
@@ -20,6 +20,7 @@ import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.IHandleInternalViews;
  */
 @Controller
 @RequestMapping("/internal")
+@Slf4j
 public class HomeInternalController {
 	
 	@Autowired
@@ -27,15 +28,18 @@ public class HomeInternalController {
 	
 	@GetMapping("/home")
 	public String index(Model model, Principal principal) {
-		model.addAttribute("menu", handlerInternalViews.loadMenuByPrincipalUser(principal.getName()));
+		List<MenuItemDTO> menu = handlerInternalViews.loadMenuByPrincipalUser(principal.getName());
+		MenuItemDTO lstItem = menu.get(menu.size() -1);
+		model.addAttribute("menu", menu);
+		log.info(lstItem.getSystemLogo());
+		model.addAttribute("cover_page", lstItem.getSystemCoverPage());
 		model.addAttribute("reportProfiles", handlerInternalViews.createReportUserProfiles(principal.getName()));
 		return "management/index";
 	}
 	
 	@ModelAttribute(name = "titlePage")
 	public String addTittlePage() {
-		return "Comercializador Monster - Internos";
+		return "Inicio";
 	}
-	
-	
+		
 }

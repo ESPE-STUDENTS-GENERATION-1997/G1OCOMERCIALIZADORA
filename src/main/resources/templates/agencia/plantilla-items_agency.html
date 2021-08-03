@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<table th:fragment="itemsAgencia(items)" class="d-none">
+		<tbody id="plantillaItemsAgencia">
+			<tr id="row_{ID_FLIGHT}"  >
+				<td  >
+				{NUM_ITEM}
+				</td>
+				<td>{DESCRIPTION_FLIGHT}
+				<input type="hidden" value="{AGENCY_FLIGHT}"	name="{FIELD_AGENCY_FLIGHT}" />
+				<input type="hidden" value="{ID_FLIGHT}"	name="{FIELD_ID_FLIGHT}" />
+				<input type="hidden" value="{DESCRIPTION_FLIGHT}"	name="{FIELD_DESCRIPTION_FLIGHT}" />
+				<input type="hidden" value="{CITY_ORIGIN_FLIGHT}"	name="{FIELD_CITY_ORIGIN_FLIGHT}" />
+				<input type="hidden" value="{CITY_DESTINY_FLIGHT}"	name="{FIELD_CITY_DESTINY_FLIGHT}" />
+				</td>
+				<td>{DATE_FLIGHT}
+				<input type="hidden" value="{DATE_FLIGHT}"	name="{FIELD_DATE_FLIGHT}" />
+				</td>
+				<td>{COSTO_FLIGHT}
+				<input type="hidden" value="{COSTO_FLIGHT}"	name="{FIELD_COSTO_FLIGHT}" />
+				</td>
+				<td >
+					{AMOUNT_FLIGHT}
+					<input type="hidden" value="{AMOUNT_FLIGHT}"	name="{FIELD_AMOUNT_FLIGHT}" />
+				</td>
+				<td> {TOTAL_FLIGHT} </td>
+				<td>
+				<a href="#" class="btn btn-danger btn-xs" >
+				<i class="fa fa-trash"></i></a>
+				
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

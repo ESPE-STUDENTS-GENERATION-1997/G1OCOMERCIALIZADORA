@@ -25,6 +25,7 @@ public class ItemFactura implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	//Se puede omitir: @JoinColumn(name="product_id"), porque es unidireccional no necesito listar los productos por items
 	private Product product;
+		
 	
 	public Double calcularImporte()
 	{

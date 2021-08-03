@@ -16,28 +16,30 @@ INSERT INTO xeest_estado (vigente_estado,descripcion_estado,keyword_estado,acces
 	 ('Está ubicada sobre la hoya de Guayllabamba','Quito',1),
 	 ('Su cabecera cantonal es la ciudad de Nueva Loja','Lago Agrio',3),
 	 ('es la ciudad más grande de Ecuador','Guayaquil',2);
-	 
-	 
  
  
-INSERT INTO xesis_sistem (vigencia_sistema,descripcion_sistema,keyword_sistema,nombre_sistema,id_sistema_original) VALUES
-	 (1,'Administrar usuarios y  productos','A001','Administración',NULL),
-	 (1,'Generar Reportes del Sistema','A002','Reportes',NULL),
-	 (1,'Generar Comprobantes','A003','Comprobantes Electrónicos',NULL),
-	 (1,'Programar tareas de marketing','A004','Mercadeo',NULL),
-	 (1,'Tienta Virtual, enfocada a los clientes externos','A005','Tienda Virtual',NULL),
-	 (1,'Tiene acceso a todos los sistemas y subsitemas registrados','A000','Superusuario',NULL),
-	 (1,'Configurar recursos y variables del aplicativo','A006','Configuraciones',NULL);
+INSERT INTO xesis_sistem (vigencia_sistema,descripcion_sistema,keyword_sistema,nombre_sistema,id_sistema_original, img_portada , img_logo ) VALUES
+	 (1,'Administrar usuarios y  productos','A001','Administración',NULL , '/img/monster-graffio.svg', '/img/monster-graffio.svg'),
+	 (1,'Generar Reportes del Sistema','A002','Reportes',NULL , '/img/monster-graffio.svg', '/img/monster-graffio.svg'),
+     (1,'Generar Comprobantes','A003','Comprobantes Electrónicos',NULL, '/img/monster-graffio.svg', '/img/monster-graffio.svg'),
+	 (1,'Programar tareas de marketing','A004','Mercadeo',NULL, '/img/monster-graffio.svg', '/img/monster-graffio.svg'),
+	 (1,'Tienta Virtual, enfocada a los clientes externos','A005','Tienda Virtual',NULL, '/img/monster-graffio.svg', '/img/monster-graffio.svg'),
+	 (1,'Tiene acceso a todos los sistemas y subsitemas registrados','A000','Superusuario',NULL, '/img/monster-graffio.svg', '/img/monster-graffio.svg'),
+	 (1,'Configurar recursos y variables del aplicativo','A006','Configuraciones',NULL, '/img/monster-graffio.svg', '/img/monster-graffio.svg'),
+	 (1,'Administración Agencia de Viajes','A007','Agencia de Viajes',NULL, '/img/Portada-Viajecito.png', '/img/monster-graffio.svg' ),
+	 (1,'Administración Aerolinea Condor','A008','Aerolinea Condor',NULL, '/img/Portada-Aerolinea.png', '/img/monster-graffio.svg');
 
-
-INSERT INTO xerec_recur (descripcion_recurso,nombre_menu_recurso,titulo_pag_recurso,url_recurso) VALUES
+INSERT INTO xerec_recur (descripcion_recurso,nombre_menu_recurso,titulo_pag_recurso,url_recurso ) VALUES
 	 ('Usuarios','Usuarios','Administración de Usuarios','/users/index'),
 	 ('Gestionar Productos','Gestión de Productos','Gestión de Productos','/store/products'),
 	 ('Crear Facturas','Facturas','Facturas Electrónicas','/store/factura'),
 	 ('Gestionar Clientes','Clientes','Gestionar Clientes','/customers'),
 	 ('Gestionar los páginas del aplicativo','Páginas','Páginas del Aplicativo','/config/pages'),
 	 ('Permite Editar Sistemas Originales y Crear Subsistemas','Sistemas del Aplicativo','Gestón Sistemas del Aplicativo','/config/systems'),
-	 ('Permite gestionar los permisos del usuario','Permisos del Usuario','Gestión de Permisos del Usuario','/users/permissons');
+	 ('Permite gestionar los permisos del usuario','Permisos del Usuario','Gestión de Permisos del Usuario','/users/permissons'),
+	 ('Venta Boletos de Aerolineas','Venta Boletos','Venta Boletos de Aerolineas','/agencia'),
+	 ('Reporte de los Boletos vendidos a Clientes','Boletos Vendidos','Reporte de los Boletos vendidos a Clientes','/agencia/ventas'),
+	 ('Creación de Vuelos','Creación de Vuelos','Creación de Vuelos','/aerolinea');
 
 
 
@@ -48,45 +50,83 @@ INSERT INTO xeres_recsys (fec_asignacion_sis_rec,fec_modificacion_perfil,fk_cod_
 	 ('2021-02-23 14:25:10',NULL,3,3),
 	 ('2021-02-23 14:25:10',NULL,5,7),
 	 ('2021-02-23 14:25:10',NULL,6,7),
-	 ('2021-02-23 14:25:10',NULL,7,1);
+	 ('2021-02-23 14:25:10',NULL,7,1),
+	 ('2021-02-23 14:25:10',NULL,8,8),
+	 ('2021-02-23 14:25:10',NULL,9,8),
+	 ('2021-02-23 14:25:10',NULL,10,9);
 
 
 INSERT INTO xedid_dirdom (ciudad_domicilio,num_domicilio,calle_prin_domicilio,barrio_domicilio,provincia_domicilio,calle_sec_domicilio) VALUES
 	 ('QUITO','E00-001','El Inca','San Isidro','Pichincha','6 de Diciembre'),
 	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca'),
 	 ('Lago Agrio','2224','aaa','aa','Lago Agrio','ssss'),
-	 ('Quito','12','Sangolqui, Av el inca y caranquis','sangolqui','Quito','sangolqui');
+	 ('Quito','12','Sangolqui, Av el inca y caranquis','sangolqui','Quito','sangolqui'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca'),
+	 ('QUITO','E00-001','10 de Agosto','El Eden','Pichincha','Rio Coca');
 	 
 /**
+Tienda
 dflasso  - pass: 123456789
 socrisanto - pass: 123456789
 vxvaca - pass: 12345
+Arolinea
+ae_dflasso  - pass: 123456789
+ae_socrisanto - pass: 123456789
+ae_vxvaca - pass: 12345
+Agencia
+ag_dflasso  - pass: 123456789
+ag_socrisanto - pass: 123456789
+ag_vxvaca - pass: 12345
 */
 
 INSERT INTO xeusa_usuario (fec_creacion_usuario,fec_modificacion_usuario,fec_nacimiento_usuario,discapacidad_usuario,correo_usuario,apellidos_usuario,nombres_usuario,username_usuario,num_documento_usuario,password_usuario,telefono_usuario,tipo_usuario,fk_cod_domicilio) VALUES
 	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'dflasso1@espe.edu.ec','Lasso Ayala','Dany Fernando','dflasso','1726039967','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0999258192','ut001',1),
 	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'socrisanto@espe.edu.ec','Crisanto','Stalin','socrisanto','1723401715','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0995077348','ut001',2),
-	 ('2021-03-07 00:48:25.284508000',NULL,'2021-03-07 00:48:25.284486000','N/A','dannyflasso99@gmail.com','aaaaa','prueba','prueba','1726039967','{bcrypt}$2a$10$n8vztPQRbBJ3DD04nDVhv.KHk0Iqk5W0ULPBEl1rYK7TLOSQQJJr.','0999258192','ut001',3),
-	 ('2021-03-08 21:53:39.243995000',NULL,'2021-03-08 21:53:39.243995000','no','vxvaca1@espe.edu.ec','Vaca','Xavier','vxvaca','1725982985','{bcrypt}$2a$10$QNAsnUchU46BwLlaAuWsVefOHlkA2iU6i1FtOmo3YX2WLKLwKUnzm','0998868008','ut001',4);
+	 ('2021-03-08 21:53:39.243995000',NULL,'2021-03-08 21:53:39.243995000','no','vxvaca1@espe.edu.ec','Vaca','Xavier','vxvaca','1725982985','{bcrypt}$2a$10$QNAsnUchU46BwLlaAuWsVefOHlkA2iU6i1FtOmo3YX2WLKLwKUnzm','0998868008','ut001',4),
+	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'dflasso1@espe.edu.ec','Lasso Ayala','Dany Fernando','ae_dflasso','1726039967','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0999258192','ut001',3),
+	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'socrisanto@espe.edu.ec','Crisanto','Stalin','ae_socrisanto','1723401715','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0995077348','ut001',5),
+	 ('2021-03-08 21:53:39.243995000',NULL,'2021-03-08 21:53:39.243995000','no','vxvaca1@espe.edu.ec','Vaca','Xavier','ae_vxvaca','1725982985','{bcrypt}$2a$10$QNAsnUchU46BwLlaAuWsVefOHlkA2iU6i1FtOmo3YX2WLKLwKUnzm','0998868008','ut001',6),
+	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'dflasso1@espe.edu.ec','Lasso Ayala','Dany Fernando','ag_dflasso','1726039967','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0999258192','ut001',7),
+	 ('2021-02-23 14:25:10',NULL,'2021-02-23 14:25:10',NULL,'socrisanto@espe.edu.ec','Crisanto','Stalin','ag_socrisanto','1723401715','{bcrypt}$2a$10$Y9BasCU6DF4sNGw3H6EBGuGSrEZArP1L1lvomPAmZ96gW0f1MQbf6','0995077348','ut001',8),
+	 ('2021-03-08 21:53:39.243995000',NULL,'2021-03-08 21:53:39.243995000','no','vxvaca1@espe.edu.ec','Vaca','Xavier','ag_vxvaca','1725982985','{bcrypt}$2a$10$QNAsnUchU46BwLlaAuWsVefOHlkA2iU6i1FtOmo3YX2WLKLwKUnzm','0998868008','ut001',9);
 
 
 	 
 INSERT INTO xeest_estusu (fec_asignacion_estusu,fec_expiracion_estusu,observation_estusu,fk_cod_estado,fk_cod_user) VALUES
 	 ('2021-02-23 14:25:10',NULL,NULL,2,1),
 	 ('2021-02-23 14:25:10',NULL,NULL,2,2),
-	 ('2021-03-10 05:00:00',NULL,'generación de contraseña por pruebas',5,3),
-	 ('2021-03-08 23:50:51.464986000',NULL,NULL,2,4);
+	 ('2021-03-08 23:50:51.464986000',NULL,NULL,2,3),
+	 ('2021-02-23 14:25:10',NULL,NULL,2,4),
+	 ('2021-02-23 14:25:10',NULL,NULL,2,5),
+	 ('2021-02-23 14:25:10',NULL,NULL,2,6),
+	 ('2021-02-23 14:25:10',NULL,NULL,2,7),
+	 ('2021-02-23 14:25:10',NULL,NULL,2,8),
+	 ('2021-02-23 14:25:10',NULL,NULL,2,9);
 
 
 INSERT INTO xeper_perfil (fec_asignacion_perfil,fec_expiracion_perfil,fec_modificacion_perfil,observation_perfil,fk_id_sistema,fk_cod_user_perfil) VALUES
-	 ('2021-03-08 21:18:56.198041000',NULL,NULL,NULL,1,4),
-	 ('2021-03-08 21:18:56.300326000',NULL,NULL,NULL,7,4),
+	 ('2021-03-08 21:18:56.198041000',NULL,NULL,NULL,1,3),
+	 ('2021-03-08 21:18:56.300326000',NULL,NULL,NULL,7,3),
+	 ('2021-03-08 21:18:56.300326000',NULL,NULL,NULL,3,3),
 	 ('2021-03-08 21:53:40.613345000',NULL,NULL,NULL,1,1),
 	 ('2021-03-08 21:55:32.966298000',NULL,NULL,NULL,3,1),
 	 ('2021-03-08 21:55:33.061321000',NULL,NULL,NULL,7,1),
 	 ('2021-03-08 21:13:56.301151000',NULL,NULL,NULL,1,2),
 	 ('2021-03-08 21:31:26.976692000',NULL,NULL,NULL,3,2),
-	 ('2021-03-09 02:53:46.086332000',NULL,NULL,NULL,7,2);
+	 ('2021-03-09 02:53:46.086332000',NULL,NULL,NULL,7,2),
+	 ('2021-03-08 21:13:56.301151000',NULL,NULL,NULL,9,4),
+	 ('2021-03-08 21:31:26.976692000',NULL,NULL,NULL,9,5),
+	 ('2021-03-09 02:53:46.086332000',NULL,NULL,NULL,9,6),
+	 ('2021-03-09 02:53:46.086332000',NULL,NULL,NULL,8,7),
+	 ('2021-03-09 02:53:46.086332000',NULL,NULL,NULL,8,8),
+	 ('2021-03-09 02:53:46.086332000',NULL,NULL,NULL,8,9);
 
 
 

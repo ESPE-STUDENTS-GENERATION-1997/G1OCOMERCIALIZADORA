@@ -7,8 +7,7 @@
 	<main class="container">
 		<section class="row justify-content-md-center">
 			<article class="card">
-				<img src="https://cdn.worldvectorlogo.com/logos/monster-graffio.svg"
-					class="card-img-top logo-home" alt="Logo-monster">
+				<img th:src="@{${cover_page}}"	class="card-img-top logo-home" alt="Logo-monster">
 				<div class="card-body">
 					<h5 class="card-title">
 						Bienvenido: <b sec:authentication="name"> </b> 

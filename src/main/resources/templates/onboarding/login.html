@@ -9,9 +9,10 @@
 		<div class="row">
 			<section class="col-sm-6">
 				<div class="portfolio-item">
-					<img class="img-fluid" th:src="@{/img/Monster_Portada.png}"
-						th:title="Comercializadora_Monster"
-						th:alt="Comercializadora_Monster" />
+					<img class="img-fluid" th:src="@{${(login_img != null) ? login_img: '/img/monster-graffio.svg' }}"
+ 						th:title="Monster"
+						th:alt="Monster" 
+						style="height: 600px;"/>
 				</div>
 			</section>
 			<section class="col-sm-6 card border-secondary pb-4 mt-6">

@@ -18,33 +18,51 @@ import ec.edu.espe.monster.GR10COMERCIALIZADORA.services.ILoginServices;
 
 @Controller
 public class AuthController {
-	
+
 	@Autowired
 	private ILoginServices loginServices;
-	
+
 	@Autowired
 	private ICredentialServices credentialServices;
-	
+
 	@GetMapping("/login")
-	public String login(@RequestParam(value = "error", required = false) String error, Model model, Principal principal, RedirectAttributes flash) {
+	public String login(@RequestParam(value = "error", required = false) String error, Model model, Principal principal,
+			RedirectAttributes flash) {
+		model.addAttribute("login_img", "/img/monster-graffio.svg");
 		return loginServices.loginUser(new LoginGetRequest(error, model, principal, flash));
 	}
-	
+
+	@GetMapping("/login-aeroline")
+	public String loginAeroline(@RequestParam(value = "error", required = false) String error, Model model, Principal principal,
+			RedirectAttributes flash) {
+		model.addAttribute("login_img", "/img/Aerolinea-Condor-Login.png");
+		return loginServices.loginUser(new LoginGetRequest(error, model, principal, flash));
+	}
+
+	@GetMapping("/login-agency")
+	public String loginAgency(@RequestParam(value = "error", required = false) String error, Model model, Principal principal,
+			RedirectAttributes flash) {
+		model.addAttribute("login_img", "/img/Viajecito-Login.png");
+		return loginServices.loginUser(new LoginGetRequest(error, model, principal, flash));
+	}
+
+
+
 	@PostMapping("/onboarding/login")
 	public String validLogin(LoginPostRequest requestLogin, Model model) {
 		return loginServices.authUser(requestLogin, model);
 	}
-	
+
 	@GetMapping("/signup")
 	public String signup(Model model, Principal principal) {
 		return "onboarding/register";
 	}
-	
+
 	@GetMapping("/auth/change-credentials")
 	public String changeCredential(Model model, Principal principal) {
 		return "onboarding/change-credentials";
 	}
-	
+
 	@PostMapping("/auth/change-credentials")
 	public String updateCredential(UpdateCredentialDTO request, Model model, Principal principal) {
 		return credentialServices.updateCredentials(request);
