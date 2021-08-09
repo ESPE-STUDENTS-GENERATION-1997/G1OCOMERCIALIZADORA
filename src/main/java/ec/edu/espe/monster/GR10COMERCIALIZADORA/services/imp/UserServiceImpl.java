@@ -92,6 +92,8 @@ public class UserServiceImpl implements IUserService {
 		AddressHome address = this.registerAddressHome(request);
 
 		String password = this.generatePassword();
+		
+		 password = "2.SaF68A1d";
 
 		UserApp newUser = this.registerNewUser(request, address, password);
 
@@ -102,9 +104,9 @@ public class UserServiceImpl implements IUserService {
 		String message = String.format(
 				"\n\nBienvenido su username es: %s" + " \n\n Su password para ingresar por primera vez es: %s",
 				request.getNickname(), password);
-
-		sendMailService.sendMail("comercializadorachinitos@gmail.com", newUser.getEmail(), "Acceso por primera vez",
-				message);
+		log.info(message);
+		//sendMailService.sendMail("comercializadorachinitos@gmail.com", newUser.getEmail(), "Acceso por primera vez",
+			//	message);
 
 		return false;
 	}

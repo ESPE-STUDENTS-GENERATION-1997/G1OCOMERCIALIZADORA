@@ -29,9 +29,9 @@ public class HomeInternalController {
 	@GetMapping("/home")
 	public String index(Model model, Principal principal) {
 		List<MenuItemDTO> menu = handlerInternalViews.loadMenuByPrincipalUser(principal.getName());
+		log.info("menu size " + menu.size());
 		MenuItemDTO lstItem = menu.get(menu.size() -1);
 		model.addAttribute("menu", menu);
-		log.info(lstItem.getSystemLogo());
 		model.addAttribute("cover_page", lstItem.getSystemCoverPage());
 		model.addAttribute("reportProfiles", handlerInternalViews.createReportUserProfiles(principal.getName()));
 		return "management/index";
